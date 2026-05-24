@@ -480,31 +480,44 @@
   }
 
   async function readContract(method, args) {
-    try {
-      const response = await fetch(RPC_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          jsonrpc: '2.0',
-          method: 'eth_call',
-          params: [{ to: CONTRACT, data: encodeCall(method, args) }, 'latest'],
-          id: 1
-        })
-      });
-      const data = await response.json();
-      const raw = data.result;
-      if (!raw || raw === '0x') return '';
-      let str = '';
-      const hex = raw.startsWith('0x') ? raw.slice(2) : raw;
-      for (let i = 0; i < hex.length; i += 2) {
-        const code = parseInt(hex.substr(i, 2), 16);
-        if (code > 31 && code < 127) str += String.fromCharCode(code);
-      }
-      return str;
-    } catch(e) {
-      console.error('readContract error:', e);
-      return '';
+    // Try multiple decoding strategies for GenLayer response
+    const urls = [RPC_URL, "https://studio.genlayer.com/api"];
+    for (const url of urls) {
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            jsonrpc: "2.0", method: "eth_call",
+            params: [{ to: CONTRACT, data: encodeCall(method, args) }, "latest"],
+            id: Date.now()
+          })
+        });
+        const data = await response.json();
+        const raw = data.result;
+        if (!raw || raw === "0x") continue;
+        const hex = raw.startsWith("0x") ? raw.slice(2) : raw;
+        // Strategy 1: ABI-encoded string (skip first 64 bytes = offset+length)
+        try {
+          const lenHex = hex.slice(64, 128);
+          const len = parseInt(lenHex, 16);
+          if (len > 0 && len < 10000) {
+            const strHex = hex.slice(128, 128 + len * 2);
+            let s = "";
+            for (let i = 0; i < strHex.length; i += 2) s += String.fromCharCode(parseInt(strHex.substr(i,2),16));
+            if (s.length > 5) return s;
+          }
+        } catch(e1) {}
+        // Strategy 2: raw ASCII extraction
+        let str = "";
+        for (let i = 0; i < hex.length; i += 2) {
+          const code = parseInt(hex.substr(i,2),16);
+          if (code > 31 && code < 127) str += String.fromCharCode(code);
+        }
+        if (str.length > 5) return str;
+      } catch(e) { console.error("readContract error:", url, e); }
     }
+    return "";
   }
 
   async function waitForReceipt(txHash, timeout = 120000) {

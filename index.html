@@ -480,20 +480,31 @@
   }
 
   async function readContract(method, args) {
-    const calldata = encodeCall(method, args);
-    const raw = await window.ethereum.request({
-      method: 'eth_call',
-      params: [{ to: CONTRACT, data: calldata }, 'latest']
-    });
-    // Decode hex response to string
-    if (!raw || raw === '0x') return '';
-    let str = '';
-    const hex = raw.startsWith('0x') ? raw.slice(2) : raw;
-    for (let i = 0; i < hex.length; i += 2) {
-      const code = parseInt(hex.substr(i, 2), 16);
-      if (code > 31 && code < 127) str += String.fromCharCode(code);
+    try {
+      const response = await fetch(RPC_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          jsonrpc: '2.0',
+          method: 'eth_call',
+          params: [{ to: CONTRACT, data: encodeCall(method, args) }, 'latest'],
+          id: 1
+        })
+      });
+      const data = await response.json();
+      const raw = data.result;
+      if (!raw || raw === '0x') return '';
+      let str = '';
+      const hex = raw.startsWith('0x') ? raw.slice(2) : raw;
+      for (let i = 0; i < hex.length; i += 2) {
+        const code = parseInt(hex.substr(i, 2), 16);
+        if (code > 31 && code < 127) str += String.fromCharCode(code);
+      }
+      return str;
+    } catch(e) {
+      console.error('readContract error:', e);
+      return '';
     }
-    return str;
   }
 
   async function waitForReceipt(txHash, timeout = 120000) {

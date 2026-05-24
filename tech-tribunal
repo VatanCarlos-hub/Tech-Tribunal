@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TECH TRIBUNAL</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;600&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#080a0f; --surface:#0d1117; --panel:#111820; --border:#1e2d3d;
+    --accent:#00d4ff; --accent2:#ff6b35; --warn:#ffd60a;
+    --green:#00ff88; --red:#ff3355; --text:#e8edf2; --muted:#4a6080;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'JetBrains Mono',monospace;min-height:100vh;overflow-x:hidden;}
+  body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
+  .container{max-width:900px;margin:0 auto;padding:40px 20px 80px;position:relative;z-index:1;}
+
+  .header{text-align:center;margin-bottom:48px;animation:fadeDown 0.8s ease;}
+  .tribunal-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);border-radius:2px;padding:6px 16px;font-size:11px;letter-spacing:3px;color:var(--accent);text-transform:uppercase;margin-bottom:20px;}
+  .tribunal-badge .dot{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite;}
+  h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,8vw,80px);letter-spacing:3px;line-height:1.05;color:#fff;text-shadow:0 0 60px rgba(0,212,255,0.3);}
+  h1 span{color:var(--accent);}
+  .tagline{margin-top:16px;font-size:13px;color:var(--muted);letter-spacing:1px;}
+  .tagline em{color:var(--accent2);font-style:normal;}
+
+  .wallet-bar{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:14px 20px;margin-bottom:24px;animation:fadeUp 0.6s ease 0.1s both;}
+  .wallet-left{display:flex;align-items:center;gap:10px;}
+  .wallet-dot{width:8px;height:8px;border-radius:50%;background:var(--muted);}
+  .wallet-dot.on{background:var(--green);box-shadow:0 0 8px var(--green);}
+  .wallet-label{font-size:11px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
+  .wallet-addr{font-size:11px;color:var(--green);letter-spacing:1px;}
+  .connect-btn{padding:8px 20px;background:var(--accent);color:#000;border:none;border-radius:2px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;cursor:pointer;transition:all 0.2s;text-transform:uppercase;}
+  .connect-btn:hover{background:#fff;}
+  .connect-btn:disabled{opacity:0.5;cursor:default;}
+
+  .contract-info{background:var(--panel);border:1px solid rgba(0,255,136,0.15);border-radius:4px;padding:12px 20px;margin-bottom:24px;font-size:11px;color:var(--muted);display:flex;align-items:center;gap:10px;}
+  .contract-info span{color:var(--green);}
+
+  .form-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:32px;margin-bottom:24px;animation:fadeUp 0.6s ease 0.2s both;}
+  .section-title{font-family:'Syne',sans-serif;font-size:11px;letter-spacing:3px;color:var(--accent);text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:12px;}
+  .section-title::after{content:'';flex:1;height:1px;background:var(--border);}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+  @media(max-width:600px){.grid2{grid-template-columns:1fr;}}
+  .field{display:flex;flex-direction:column;gap:8px;}
+  .field.full{grid-column:1/-1;}
+  label{font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
+  input,select,textarea{background:var(--panel);border:1px solid var(--border);border-radius:3px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:13px;padding:12px 14px;outline:none;transition:border-color 0.2s;width:100%;}
+  input:focus,select:focus,textarea:focus{border-color:var(--accent);}
+  select option{background:var(--panel);}
+  textarea{resize:vertical;min-height:80px;line-height:1.6;}
+
+  .upload-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:32px;margin-bottom:24px;animation:fadeUp 0.6s ease 0.3s both;}
+  .upload-zone{border:2px dashed var(--border);border-radius:4px;padding:28px;text-align:center;cursor:pointer;transition:all 0.3s;position:relative;}
+  .upload-zone:hover,.upload-zone.over{border-color:var(--accent);background:rgba(0,212,255,0.04);}
+  .upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+  .upload-icon{font-size:28px;margin-bottom:8px;}
+  .upload-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:#fff;margin-bottom:4px;}
+  .upload-sub{font-size:11px;color:var(--muted);}
+  .upload-sub b{color:var(--accent);}
+  .file-ok{display:none;margin-top:14px;background:rgba(0,255,136,0.06);border:1px solid rgba(0,255,136,0.2);border-radius:3px;padding:14px;}
+  .file-ok.show{display:block;}
+  .file-ok-row{display:flex;justify-content:space-between;align-items:center;}
+  .file-ok-name{font-size:12px;color:var(--green);}
+  .file-ok-stats{font-size:10px;color:var(--accent);margin-bottom:4px;}
+  .file-rm{background:none;border:none;color:var(--muted);cursor:pointer;font-size:11px;}
+  .file-rm:hover{color:var(--red);}
+  .file-preview{font-size:10px;color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);max-height:60px;overflow:hidden;white-space:pre-wrap;word-break:break-all;}
+
+  .howto-btn{display:flex;align-items:center;gap:8px;background:none;border:none;border-top:1px solid var(--border);width:100%;padding:10px 0;margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;cursor:pointer;transition:color 0.2s;}
+  .howto-btn:hover{color:var(--accent);}
+  .howto-btn .arr{transition:transform 0.3s;}
+  .howto-btn.open .arr{transform:rotate(90deg);}
+  .howto-body{display:none;margin-top:14px;}
+  .howto-body.open{display:block;}
+  .howto-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  @media(max-width:600px){.howto-grid{grid-template-columns:1fr;}}
+  .howto-card{background:var(--panel);border:1px solid var(--border);border-radius:3px;padding:14px;}
+  .howto-brand{font-size:10px;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:6px;}
+  .howto-text{font-size:11px;color:#8ca0b8;line-height:1.7;}
+  .howto-text strong{color:var(--text);}
+
+  .error-msg{background:rgba(255,51,85,0.08);border:1px solid rgba(255,51,85,0.25);border-radius:3px;padding:14px;color:var(--red);font-size:12px;margin-bottom:16px;display:none;}
+  .error-msg.show{display:block;}
+
+  .submit-btn{width:100%;margin-top:24px;padding:18px;background:var(--accent);color:#000;border:none;border-radius:3px;font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;cursor:pointer;transition:all 0.2s;}
+  .submit-btn:hover:not(:disabled){background:#fff;box-shadow:0 0 30px rgba(0,212,255,0.4);transform:translateY(-1px);}
+  .submit-btn:disabled{opacity:0.5;cursor:not-allowed;}
+
+  /* RESULTS */
+  .results{display:none;animation:fadeUp 0.6s ease;}
+  .results.show{display:block;}
+  .results-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .results-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;color:var(--accent);}
+  .case-num{font-size:10px;color:var(--muted);letter-spacing:2px;}
+
+  .chain-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:20px;margin-bottom:20px;}
+  .chain-title{font-size:10px;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:14px;}
+  .chain-step{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--muted);margin-bottom:8px;}
+  .chain-step.active{color:var(--text);}
+  .chain-step.done{color:var(--green);}
+  .step-icon{width:20px;text-align:center;flex-shrink:0;}
+  .spinner{display:inline-block;width:12px;height:12px;border:1.5px solid var(--muted);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;}
+
+  .findings-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+  @media(max-width:600px){.findings-grid{grid-template-columns:1fr;}}
+  .finding-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:16px;}
+  .finding-role{font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
+  .finding-text{font-size:12px;color:#8ca0b8;line-height:1.6;}
+
+  .verdict-card{background:var(--surface);border:2px solid var(--accent);border-radius:4px;padding:32px;display:none;animation:fadeUp 0.6s ease;position:relative;overflow:hidden;}
+  .verdict-card::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top left,rgba(0,212,255,0.05),transparent 60%);pointer-events:none;}
+  .verdict-card.show{display:block;}
+  .verdict-lbl{font-size:10px;letter-spacing:3px;color:var(--accent);text-transform:uppercase;margin-bottom:10px;}
+  .verdict-main{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,6vw,56px);letter-spacing:3px;line-height:1;margin-bottom:16px;}
+  .verdict-main.fault{color:var(--red);}
+  .verdict-main.partial{color:var(--warn);}
+  .verdict-main.user{color:var(--muted);}
+  .verdict-main.unclear{color:var(--accent2);}
+  .verdict-summary{font-size:13px;line-height:1.8;color:#8ca0b8;margin-bottom:24px;border-left:3px solid var(--accent);padding-left:16px;}
+  .bar-section{margin-bottom:24px;}
+  .bar-label{font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;display:flex;justify-content:space-between;}
+  .bar-track{height:6px;background:var(--panel);border-radius:3px;overflow:hidden;}
+  .bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--green));border-radius:3px;transition:width 1s ease;width:0%;}
+  .actions-box{background:var(--panel);border:1px solid var(--border);border-radius:3px;padding:20px;margin-bottom:24px;}
+  .actions-title{font-size:10px;letter-spacing:2px;color:var(--warn);text-transform:uppercase;margin-bottom:12px;}
+  .action-row{display:flex;gap:10px;font-size:12px;color:var(--text);margin-bottom:8px;line-height:1.6;}
+  .action-row::before{content:'→';color:var(--accent);flex-shrink:0;}
+  .proof-box{background:var(--panel);border:1px solid rgba(0,255,136,0.2);border-radius:3px;padding:14px;margin-bottom:24px;}
+  .proof-title{font-size:10px;letter-spacing:2px;color:var(--green);text-transform:uppercase;margin-bottom:6px;}
+  .proof-tx{font-size:10px;color:#8ca0b8;word-break:break-all;}
+  .btn-row{display:flex;gap:12px;flex-wrap:wrap;}
+  .copy-btn{padding:12px 24px;background:transparent;border:1px solid var(--accent);border-radius:3px;color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:12px;cursor:pointer;transition:all 0.2s;}
+  .copy-btn:hover{background:rgba(0,212,255,0.1);}
+  .reset-btn{padding:12px 24px;background:transparent;border:1px solid var(--border);border-radius:3px;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:12px;cursor:pointer;transition:all 0.2s;}
+  .reset-btn:hover{border-color:var(--muted);color:var(--text);}
+
+  .footer{text-align:center;margin-top:48px;font-size:10px;color:var(--muted);letter-spacing:2px;}
+  .footer span{color:var(--accent);}
+
+  @keyframes fadeDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="tribunal-badge"><span class="dot"></span> GenLayer — Optimistic Democracy</div>
+    <h1>YOU PAID FOR IT.<br><span>THEY BROKE IT.</span><br>NOW PROVE IT.</h1>
+    <p class="tagline">4 AI validators. Your crash log. <em>Their verdict. On-chain.</em></p>
+  </div>
+
+  <!-- WALLET -->
+  <div class="wallet-bar">
+    <div class="wallet-left">
+      <div class="wallet-dot" id="wDot"></div>
+      <span class="wallet-label" id="wLabel">Not connected</span>
+      <span class="wallet-addr" id="wAddr"></span>
+    </div>
+    <button class="connect-btn" id="connectBtn" onclick="connectWallet()">Connect Wallet</button>
+  </div>
+
+  <!-- CONTRACT INFO -->
+  <div class="contract-info">
+    ⛓ Contract: <span>0x52266b39411BFa3BCE7724AD632fB1E92D86E152</span> — GenLayer Studionet
+  </div>
+
+  <!-- FORM -->
+  <div class="form-card">
+    <div class="section-title">Case Filing</div>
+    <div class="grid2">
+      <div class="field">
+        <label>Device Brand</label>
+        <select id="brand">
+          <option value="">Select brand...</option>
+          <option value="Apple">Apple (iPhone / Mac / iPad)</option>
+          <option value="Samsung">Samsung</option>
+          <option value="Google">Google Pixel</option>
+          <option value="Sony">Sony</option>
+          <option value="OnePlus">OnePlus</option>
+          <option value="Xiaomi">Xiaomi</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Device Model</label>
+        <input type="text" id="model" placeholder="e.g. iPhone 15 Pro Max"/>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="field">
+        <label>Problem Duration</label>
+        <select id="duration">
+          <option value="a few days">A few days</option>
+          <option value="1-2 weeks">1–2 weeks</option>
+          <option value="1 month">About 1 month</option>
+          <option value="several months">Several months</option>
+          <option value="since purchase">Since purchase</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Under Warranty?</label>
+        <select id="warranty">
+          <option value="yes, within warranty">Yes, within warranty</option>
+          <option value="warranty just expired">Warranty just expired</option>
+          <option value="no warranty">No warranty</option>
+          <option value="unknown">Don't know</option>
+        </select>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="field full">
+        <label>Describe your problem</label>
+        <textarea id="problem" rows="3" placeholder="e.g. My iPhone randomly restarts even with 80% battery. Factory reset didn't help — same error came back within 1 hour."></textarea>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="field full">
+        <label>What did official support say?</label>
+        <textarea id="support" rows="2" placeholder="e.g. Apple ran diagnostics, found no hardware error, told me to factory reset."></textarea>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="field full">
+        <label>What have you already tried?</label>
+        <textarea id="tried" rows="2" placeholder="e.g. Factory reset, updated iOS, replaced SIM..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILE UPLOAD -->
+  <div class="upload-card">
+    <div class="section-title">📁 Diagnostic Log — Optional but powerful</div>
+    <div class="upload-zone" id="uploadZone">
+      <input type="file" id="logFile" accept=".txt,.ips,.log,.json,.crash" onchange="handleFile(event)"/>
+      <div class="upload-icon">📋</div>
+      <div class="upload-title">Drop your device log file here</div>
+      <div class="upload-sub">Accepted: <b>.txt .ips .log .json .crash</b> — AI reads actual error codes, not just your description.</div>
+    </div>
+    <div class="file-ok" id="fileOk">
+      <div class="file-ok-row">
+        <div>
+          <div class="file-ok-stats" id="fileStats"></div>
+          <div class="file-ok-name" id="fileName"></div>
+        </div>
+        <button class="file-rm" onclick="removeFile()">✕ Remove</button>
+      </div>
+      <div class="file-preview" id="filePreview"></div>
+    </div>
+
+    <button class="howto-btn" id="howtoBtn" onclick="toggleHowto()">
+      <span class="arr">▶</span> How to get your device logs
+    </button>
+    <div class="howto-body" id="howtoBody">
+      <div class="howto-grid">
+        <div class="howto-card">
+          <div class="howto-brand">🍎 iPhone / iPad</div>
+          <div class="howto-text"><strong>Settings</strong> → <strong>Privacy & Security</strong> → <strong>Analytics & Improvements</strong> → <strong>Analytics Data</strong> → tap any .ips file → Share → Save to Files</div>
+        </div>
+        <div class="howto-card">
+          <div class="howto-brand">🤖 Android / Samsung</div>
+          <div class="howto-text">USB Debugging aktivieren → PC: <strong>adb bugreport log.txt</strong><br>Oder: Settings → About Phone → Diagnostic → Export</div>
+        </div>
+        <div class="howto-card">
+          <div class="howto-brand">🍎 Mac</div>
+          <div class="howto-text"><strong>Console.app</strong> → Gerät links wählen → Fehler filtern → File → Export as .txt</div>
+        </div>
+        <div class="howto-card">
+          <div class="howto-brand">💡 Kein Log?</div>
+          <div class="howto-text">Kein Problem. Das Tribunal funktioniert auch ohne. Ein Log macht das Verdict <strong>deutlich präziser</strong>.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="error-msg" id="errBox"></div>
+    <button class="submit-btn" id="submitBtn" onclick="runTribunal()">⚖️ SUMMON THE TRIBUNAL</button>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="results">
+    <div class="results-header">
+      <div class="results-title">⚖️ TRIBUNAL IN SESSION</div>
+      <div class="case-num" id="caseNum">CASE #——</div>
+    </div>
+
+    <div class="chain-card">
+      <div class="chain-title">⛓ On-Chain Progress</div>
+      <div class="chain-step" id="s1"><span class="step-icon">○</span> Sending case to GenLayer Studionet...</div>
+      <div class="chain-step" id="s2"><span class="step-icon">○</span> AI Validators analyzing independently...</div>
+      <div class="chain-step" id="s3"><span class="step-icon">○</span> Optimistic Democracy reaching consensus...</div>
+      <div class="chain-step" id="s4"><span class="step-icon">○</span> Verdict committed on-chain...</div>
+    </div>
+
+    <div class="findings-grid" id="findingsGrid" style="display:none">
+      <div class="finding-card"><div class="finding-role" style="color:#00d4ff">🔧 Hardware Expert</div><div class="finding-text" id="fHw">—</div></div>
+      <div class="finding-card"><div class="finding-role" style="color:#00ff88">💻 Software Diagnostics</div><div class="finding-text" id="fSw">—</div></div>
+      <div class="finding-card"><div class="finding-role" style="color:#ffd60a">⚖️ Consumer Rights</div><div class="finding-text" id="fLegal">—</div></div>
+      <div class="finding-card"><div class="finding-role" style="color:#ff6b35">📊 Statistical</div><div class="finding-text" id="fStat">—</div></div>
+    </div>
+
+    <div class="verdict-card" id="verdictCard">
+      <div class="verdict-lbl">⚖️ GenLayer Consensus — Final Verdict</div>
+      <div class="verdict-main" id="verdictMain">—</div>
+      <div class="verdict-summary" id="verdictSummary"></div>
+      <div class="bar-section">
+        <div class="bar-label"><span>Validator Confidence</span><span id="barPct">—</span></div>
+        <div class="bar-track"><div class="bar-fill" id="barFill"></div></div>
+      </div>
+      <div class="actions-box">
+        <div class="actions-title">⚡ Recommended Actions</div>
+        <div id="actionsList"></div>
+      </div>
+      <div class="proof-box">
+        <div class="proof-title">⛓ On-Chain Proof</div>
+        <div class="proof-tx" id="proofTx">—</div>
+      </div>
+      <div class="btn-row">
+        <button class="copy-btn" onclick="copyReport()">📋 Copy Full Report</button>
+        <button class="reset-btn" onclick="resetAll()">↩ New Case</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">Powered by <span>GenLayer Studionet</span> · Optimistic Democracy · Not legal advice</div>
+</div>
+
+<script>
+  const CONTRACT = '0x52266b39411BFa3BCE7724AD632fB1E92D86E152';
+  const CHAIN_ID_HEX = '0xF24F'; // 61999
+  const RPC_URL = 'https://studio.genlayer.com/api';
+
+  let wallet = null;
+  let logContent = '';
+  let logFileName = '';
+  let caseData = {};
+  let currentTx = '';
+  let parsedVerdict = null;
+
+  // ── WALLET ──────────────────────────────────────────────────────────────────
+  async function connectWallet() {
+    if (!window.ethereum) { showErr('MetaMask not found. Please install MetaMask.'); return; }
+    try {
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      wallet = accounts[0];
+
+      // Add / switch to GenLayer Studionet
+      try {
+        await window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: CHAIN_ID_HEX }] });
+      } catch (e) {
+        if (e.code === 4902) {
+          await window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [{ chainId: CHAIN_ID_HEX, chainName: 'GenLayer Studionet', rpcUrls: [RPC_URL], nativeCurrency: { name: 'GEN', symbol: 'GEN', decimals: 18 } }]
+          });
+        }
+      }
+
+      document.getElementById('wDot').classList.add('on');
+      document.getElementById('wLabel').textContent = 'Connected';
+      document.getElementById('wAddr').textContent = wallet.slice(0,6)+'...'+wallet.slice(-4);
+      document.getElementById('connectBtn').textContent = '✓ Connected';
+      document.getElementById('connectBtn').disabled = true;
+    } catch (e) { showErr('Wallet error: ' + e.message); }
+  }
+
+  // ── FILE ────────────────────────────────────────────────────────────────────
+  const zone = document.getElementById('uploadZone');
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('over'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('over'));
+  zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('over'); if (e.dataTransfer.files[0]) processFile(e.dataTransfer.files[0]); });
+  function handleFile(e) { if (e.target.files[0]) processFile(e.target.files[0]); }
+  function processFile(file) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      logContent = e.target.result.substring(0, 8000);
+      logFileName = file.name;
+      document.getElementById('fileOk').classList.add('show');
+      document.getElementById('fileName').textContent = '✓ ' + file.name;
+      document.getElementById('fileStats').textContent = 'SIZE: '+(file.size/1024).toFixed(1)+' KB  |  CHARS: '+logContent.length.toLocaleString();
+      document.getElementById('filePreview').textContent = logContent.substring(0,280)+'...';
+    };
+    reader.readAsText(file);
+  }
+  function removeFile() {
+    logContent=''; logFileName='';
+    document.getElementById('fileOk').classList.remove('show');
+    document.getElementById('logFile').value='';
+  }
+  function toggleHowto() {
+    document.getElementById('howtoBtn').classList.toggle('open');
+    document.getElementById('howtoBody').classList.toggle('open');
+  }
+
+  // ── MAIN ────────────────────────────────────────────────────────────────────
+  async function runTribunal() {
+    hideErr();
+    const brand = document.getElementById('brand').value;
+    const model = document.getElementById('model').value;
+    const problem = document.getElementById('problem').value;
+    if (!wallet) { showErr('Please connect your wallet first.'); return; }
+    if (!brand || !model || !problem) { showErr('Please fill in Brand, Model, and Problem.'); return; }
+
+    caseData = {
+      brand, model, problem,
+      support: document.getElementById('support').value || '',
+      tried: document.getElementById('tried').value || '',
+      duration: document.getElementById('duration').value,
+      warranty: document.getElementById('warranty').value
+    };
+
+    const caseNum = 'TT-' + Date.now().toString().slice(-6);
+    document.getElementById('submitBtn').disabled = true;
+    document.getElementById('results').classList.add('show');
+    document.getElementById('caseNum').textContent = 'CASE #' + caseNum;
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+
+    setStep(1);
+
+    try {
+      // Encode call as JSON calldata (GenLayer Python contract encoding)
+      const args = [
+        caseData.brand,
+        caseData.model,
+        caseData.problem,
+        caseData.support,
+        caseData.tried,
+        caseData.duration,
+        caseData.warranty,
+        logContent
+      ];
+      const calldata = encodeCall('analyze_case', args);
+
+      const txHash = await window.ethereum.request({
+        method: 'eth_sendTransaction',
+        params: [{ from: wallet, to: CONTRACT, data: calldata, gas: '0x927C0' }] // 600000 gas
+      });
+
+      currentTx = txHash;
+      document.getElementById('proofTx').textContent = 'TX: ' + txHash;
+      setStep(2);
+
+      // Poll for receipt
+      const receipt = await waitForReceipt(txHash);
+      setStep(3);
+
+      if (!receipt || receipt.status !== '0x1') throw new Error('Transaction failed on-chain.');
+
+      await sleep(2000);
+      setStep(4);
+
+      // Read verdict from contract
+      const verdictRaw = await readContract('get_verdict', []);
+      const findingsRaw = await readContract('get_findings', []);
+      const actionsRaw = await readContract('get_actions', []);
+
+      await sleep(500);
+      showResults(verdictRaw, findingsRaw, actionsRaw);
+
+    } catch (e) {
+      showErr('Error: ' + (e.message || e));
+      document.getElementById('submitBtn').disabled = false;
+    }
+  }
+
+  function encodeCall(method, args) {
+    // GenLayer uses JSON-encoded calldata
+    const payload = JSON.stringify({ method, args });
+    let hex = '0x';
+    for (let i = 0; i < payload.length; i++) hex += payload.charCodeAt(i).toString(16).padStart(2,'0');
+    return hex;
+  }
+
+  async function readContract(method, args) {
+    const calldata = encodeCall(method, args);
+    const raw = await window.ethereum.request({
+      method: 'eth_call',
+      params: [{ to: CONTRACT, data: calldata }, 'latest']
+    });
+    // Decode hex response to string
+    if (!raw || raw === '0x') return '';
+    let str = '';
+    const hex = raw.startsWith('0x') ? raw.slice(2) : raw;
+    for (let i = 0; i < hex.length; i += 2) {
+      const code = parseInt(hex.substr(i, 2), 16);
+      if (code > 31 && code < 127) str += String.fromCharCode(code);
+    }
+    return str;
+  }
+
+  async function waitForReceipt(txHash, timeout = 120000) {
+    const start = Date.now();
+    while (Date.now() - start < timeout) {
+      try {
+        const r = await window.ethereum.request({ method: 'eth_getTransactionReceipt', params: [txHash] });
+        if (r && r.blockNumber) return r;
+      } catch(e) {}
+      await sleep(3000);
+    }
+    throw new Error('Timeout: Transaction not confirmed after 2 minutes.');
+  }
+
+  function showResults(verdictRaw, findingsRaw, actionsRaw) {
+    // Parse pipe-delimited strings from contract
+    // last_verdict = "TITLE | VERDICT_TYPE | CONFIDENCE% | summary"
+    // last_findings = "Hardware: X | Software: Y | Legal: Z | Statistical: W"
+    // last_actions = "1. A | 2. B | 3. C | 4. D"
+
+    let title = '—', verdictType = 'INCONCLUSIVE', confidence = 75, summary = verdictRaw;
+    try {
+      const parts = verdictRaw.split(' | ');
+      if (parts.length >= 4) {
+        title = parts[0];
+        verdictType = parts[1];
+        confidence = parseInt(parts[2]) || 75;
+        summary = parts.slice(3).join(' | ');
+      }
+    } catch(e) {}
+
+    // Findings
+    try {
+      const fp = findingsRaw.split(' | ');
+      document.getElementById('fHw').textContent = (fp[0]||'').replace('Hardware: ','');
+      document.getElementById('fSw').textContent = (fp[1]||'').replace('Software: ','');
+      document.getElementById('fLegal').textContent = (fp[2]||'').replace('Legal: ','');
+      document.getElementById('fStat').textContent = (fp[3]||'').replace('Statistical: ','');
+      document.getElementById('findingsGrid').style.display = 'grid';
+    } catch(e) {}
+
+    // Actions
+    try {
+      const ap = actionsRaw.split(' | ');
+      document.getElementById('actionsList').innerHTML = ap.map(a =>
+        `<div class="action-row">${a.replace(/^\d+\.\s*/,'')}</div>`
+      ).join('');
+    } catch(e) {}
+
+    // Verdict card
+    const main = document.getElementById('verdictMain');
+    let cls = 'unclear';
+    if (verdictType.includes('MANUFACTURER')) cls = 'fault';
+    else if (verdictType.includes('POSSIBLE')) cls = 'partial';
+    else if (verdictType.includes('USER')) cls = 'user';
+    main.textContent = title;
+    main.className = 'verdict-main ' + cls;
+    document.getElementById('verdictSummary').textContent = summary;
+    document.getElementById('barPct').textContent = confidence + '%';
+    setTimeout(() => { document.getElementById('barFill').style.width = confidence + '%'; }, 200);
+
+    document.getElementById('verdictCard').classList.add('show');
+    document.getElementById('verdictCard').scrollIntoView({ behavior: 'smooth' });
+
+    parsedVerdict = { title, verdictType, confidence, summary };
+  }
+
+  function setStep(n) {
+    for (let i = 1; i <= 4; i++) {
+      const el = document.getElementById('s' + i);
+      const icon = el.querySelector('.step-icon');
+      el.classList.remove('active','done');
+      if (i < n) { el.classList.add('done'); icon.textContent = '✓'; }
+      else if (i === n) { el.classList.add('active'); icon.innerHTML = '<span class="spinner"></span>'; }
+      else { icon.textContent = '○'; }
+    }
+  }
+
+  function showErr(msg) { const b=document.getElementById('errBox'); b.textContent='⚠ '+msg; b.classList.add('show'); }
+  function hideErr() { document.getElementById('errBox').classList.remove('show'); }
+
+  function copyReport() {
+    const lines = [
+      'TECH TRIBUNAL — OFFICIAL CASE REPORT',
+      'Date: ' + new Date().toLocaleDateString(),
+      currentTx ? 'On-Chain TX: ' + currentTx : '',
+      logFileName ? 'Log File: ' + logFileName : 'No log file',
+      '',
+      'DEVICE: ' + caseData.brand + ' ' + caseData.model,
+      'Duration: ' + caseData.duration + ' | Warranty: ' + caseData.warranty,
+      'Problem: ' + caseData.problem,
+      'Support said: ' + (caseData.support||'not provided'),
+      '',
+      '--- VERDICT ---',
+      document.getElementById('verdictMain').textContent,
+      document.getElementById('verdictSummary').textContent,
+      '',
+      'ACTIONS:',
+      ...Array.from(document.querySelectorAll('.action-row')).map((el,i)=>`${i+1}. ${el.textContent}`)
+    ];
+    navigator.clipboard.writeText(lines.filter(Boolean).join('\n'));
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = '✓ Copied!';
+    setTimeout(()=>btn.textContent='📋 Copy Full Report', 2000);
+  }
+
+  function resetAll() {
+    document.getElementById('submitBtn').disabled = false;
+    document.getElementById('results').classList.remove('show');
+    document.getElementById('verdictCard').classList.remove('show');
+    document.getElementById('findingsGrid').style.display = 'none';
+    document.getElementById('barFill').style.width = '0%';
+    currentTx = ''; parsedVerdict = null;
+    removeFile();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function sleep(ms) { return new Promise(r=>setTimeout(r,ms)); }
+
+  // Auto-reconnect
+  if (window.ethereum) {
+    window.ethereum.request({ method: 'eth_accounts' }).then(a => { if (a.length) { wallet = a[0]; connectWallet(); } });
+  }
+</script>
+</body>
+</html>

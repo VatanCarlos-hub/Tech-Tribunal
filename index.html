@@ -346,16 +346,22 @@
       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
       wallet = accounts[0];
 
-      // Add / switch to GenLayer Studionet
+      // Switch to GenLayer Studionet — ignore if network already exists under different name
       try {
         await window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: CHAIN_ID_HEX }] });
       } catch (e) {
         if (e.code === 4902) {
-          await window.ethereum.request({
-            method: 'wallet_addEthereumChain',
-            params: [{ chainId: CHAIN_ID_HEX, chainName: 'GenLayer Studionet', rpcUrls: [RPC_URL], nativeCurrency: { name: 'GEN', symbol: 'GEN', decimals: 18 } }]
-          });
+          try {
+            await window.ethereum.request({
+              method: 'wallet_addEthereumChain',
+              params: [{ chainId: CHAIN_ID_HEX, chainName: 'GenLayer Studionet', rpcUrls: [RPC_URL], nativeCurrency: { name: 'GEN', symbol: 'GEN', decimals: 18 } }]
+            });
+          } catch (addErr) {
+            // Network already exists under different name — that's fine, continue
+            console.log('Network already exists:', addErr.message);
+          }
         }
+        // Any other error — try to continue anyway
       }
 
       document.getElementById('wDot').classList.add('on');

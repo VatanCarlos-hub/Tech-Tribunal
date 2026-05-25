@@ -292,6 +292,11 @@
       <div class="chain-step" id="s2"><span class="step-icon">○</span> AI Validators analyzing independently...</div>
       <div class="chain-step" id="s3"><span class="step-icon">○</span> Optimistic Democracy reaching consensus...</div>
       <div class="chain-step" id="s4"><span class="step-icon">○</span> Verdict committed on-chain...</div>
+      <div id="checkVerdictBox" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+        <div style="font-size:11px;color:var(--muted);margin-bottom:12px;letter-spacing:1px;">GenLayer validators need ~5 min. Click when ready to fetch verdict:</div>
+        <button onclick="manualCheckVerdict()" style="padding:10px 24px;background:var(--accent);color:#000;border:none;border-radius:3px;font-family:JetBrains Mono,monospace;font-size:12px;letter-spacing:2px;cursor:pointer;" id="checkBtn">⚖️ CHECK VERDICT NOW</button>
+        <div style="font-size:10px;color:var(--muted);margin-top:8px;">TX: <span id="txShort" style="color:var(--green)"></span></div>
+      </div>
     </div>
 
     <div class="findings-grid" id="findingsGrid" style="display:none">
@@ -454,16 +459,12 @@
 
       if (!receipt || receipt.status !== '0x1') throw new Error('Transaction failed on-chain.');
 
-      await sleep(2000);
-      setStep(4);
+      setStep(3);
+      await sleep(1000);
 
-      // Read verdict from contract
-      const verdictRaw = await readContract('get_verdict', []);
-      const findingsRaw = await readContract('get_findings', []);
-      const actionsRaw = await readContract('get_actions', []);
-
-      await sleep(500);
-      showResults(verdictRaw, findingsRaw, actionsRaw);
+      // Show manual check button — GenLayer needs time for validator consensus
+      document.getElementById('checkVerdictBox').style.display = 'block';
+      document.getElementById('txShort').textContent = currentTx.slice(0,10) + '...' + currentTx.slice(-6);
 
     } catch (e) {
       showErr('Error: ' + (e.message || e));
@@ -583,6 +584,33 @@
     document.getElementById('verdictCard').scrollIntoView({ behavior: 'smooth' });
 
     parsedVerdict = { title, verdictType, confidence, summary };
+  }
+
+  async function manualCheckVerdict() {
+    const btn = document.getElementById('checkBtn');
+    btn.textContent = '⏳ Fetching...';
+    btn.disabled = true;
+    try {
+      const verdictRaw = await readContract('get_verdict', []);
+      const findingsRaw = await readContract('get_findings', []);
+      const actionsRaw = await readContract('get_actions', []);
+      console.log('verdictRaw:', verdictRaw);
+      console.log('findingsRaw:', findingsRaw);
+      console.log('actionsRaw:', actionsRaw);
+      if (!verdictRaw || verdictRaw.length < 5) {
+        btn.textContent = '⚖️ CHECK VERDICT NOW';
+        btn.disabled = false;
+        showErr('Verdict not ready yet — validators still working. Try again in 1-2 min.');
+        return;
+      }
+      setStep(4);
+      document.getElementById('checkVerdictBox').style.display = 'none';
+      showResults(verdictRaw, findingsRaw, actionsRaw);
+    } catch(e) {
+      btn.textContent = '⚖️ CHECK VERDICT NOW';
+      btn.disabled = false;
+      showErr('Could not fetch verdict: ' + e.message);
+    }
   }
 
   function setStep(n) {

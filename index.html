@@ -140,11 +140,30 @@
   .footer{text-align:center;margin-top:48px;font-size:10px;color:var(--muted);letter-spacing:2px;}
   .footer span{color:var(--accent);}
 
+
+  .lang-strip{background:rgba(0,212,255,0.04);border-bottom:1px solid var(--border);padding:8px 0;margin-bottom:0;}
+  .lang-inner{max-width:900px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+  .lang-lbl{font-size:9px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-right:4px;}
+  .lang-btn{font-family:'JetBrains Mono',monospace;font-size:10px;padding:4px 10px;background:transparent;border:1px solid var(--border);color:var(--muted);cursor:pointer;border-radius:3px;transition:all 0.15s;display:inline-flex;align-items:center;gap:5px;}
+  .lang-btn:hover,.lang-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(0,212,255,0.06);}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
   @keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
+<div class="lang-strip">
+  <div class="lang-inner">
+    <span class="lang-lbl">Lang</span>
+    <button class="lang-btn active" data-lang="en"><img src="https://flagcdn.com/16x12/gb.png" width="16" height="12" alt=""> EN</button>
+    <button class="lang-btn" data-lang="de"><img src="https://flagcdn.com/16x12/de.png" width="16" height="12" alt=""> DE</button>
+    <button class="lang-btn" data-lang="tr"><img src="https://flagcdn.com/16x12/tr.png" width="16" height="12" alt=""> TR</button>
+    <button class="lang-btn" data-lang="ar"><img src="https://flagcdn.com/16x12/sa.png" width="16" height="12" alt=""> AR</button>
+    <button class="lang-btn" data-lang="es"><img src="https://flagcdn.com/16x12/es.png" width="16" height="12" alt=""> ES</button>
+    <button class="lang-btn" data-lang="fr"><img src="https://flagcdn.com/16x12/fr.png" width="16" height="12" alt=""> FR</button>
+    <button class="lang-btn" data-lang="ru"><img src="https://flagcdn.com/16x12/ru.png" width="16" height="12" alt=""> RU</button>
+    <button class="lang-btn" data-lang="zh"><img src="https://flagcdn.com/16x12/cn.png" width="16" height="12" alt=""> ZH</button>
+  </div>
+</div>
 <div class="container">
 
   <div class="header">
@@ -598,6 +617,277 @@
 
   function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
 
+
+  // ── TRANSLATIONS ────────────────────────────────────────────────────────
+  const TR = {
+    en:{
+      connect:'Connect Wallet', connected:'Connected ✓',
+      submit:'⚖️ SUMMON THE TRIBUNAL',
+      h1:'YOU PAID FOR IT.<br><span>THEY BROKE IT.</span><br>NOW PROVE IT.',
+      tagline:'4 AI validators. Your crash log. <em>Their verdict. On-chain.</em>',
+      case_title:'Case Filing', log_title:'📁 Diagnostic Log — Optional but powerful',
+      lbl_brand:'Device Brand', lbl_model:'Device Model', lbl_duration:'Problem Duration',
+      lbl_warranty:'Under Warranty?', lbl_problem:'Describe your problem',
+      lbl_support:'What did official support say?', lbl_tried:'What have you already tried?',
+      ph_model:'e.g. iPhone 15 Pro Max',
+      ph_problem:"e.g. My iPhone randomly restarts even with 80% battery. Factory reset didn't help — same error came back within 1 hour.",
+      ph_support:'e.g. Apple ran diagnostics, found no hardware error, told me to factory reset.',
+      ph_tried:'e.g. Factory reset, updated iOS, replaced SIM...',
+      upload_title:'Drop your device log file here',
+      howto:'How to get your device logs',
+      chain_title:'⛓ On-Chain Progress',
+      s1:'Sending case to GenLayer Studionet...',
+      s2:'AI Validators analyzing independently...',
+      s3:'Waiting for FINALIZED status...',
+      s4:'Reading verdict from chain...',
+      verdict_lbl:'⚖️ GenLayer Consensus — Final Verdict',
+      confidence:'Validator Confidence',
+      actions_title:'⚡ Recommended Actions',
+      proof_title:'⛓ On-Chain Proof',
+      copy:'📋 Copy Full Report', reset:'↩ New Case',
+      footer:'Powered by <span>GenLayer Studionet</span> · Optimistic Democracy · Not legal advice'
+    },
+    de:{
+      connect:'Wallet verbinden', connected:'Verbunden ✓',
+      submit:'⚖️ TRIBUNAL EINBERUFEN',
+      h1:'DU HAST BEZAHLT.<br><span>SIE HABEN ES KAPUTT GEMACHT.</span><br>JETZT BEWEISE ES.',
+      tagline:'4 KI-Validatoren. Dein Crash-Log. <em>Ihr Urteil. On-Chain.</em>',
+      case_title:'Fallakte', log_title:'📁 Diagnose-Log — Optional aber mächtig',
+      lbl_brand:'Gerätemarke', lbl_model:'Gerätemodell', lbl_duration:'Problemdauer',
+      lbl_warranty:'Noch Garantie?', lbl_problem:'Beschreibe dein Problem',
+      lbl_support:'Was hat der offizielle Support gesagt?', lbl_tried:'Was hast du bereits probiert?',
+      ph_model:'z.B. iPhone 15 Pro Max',
+      ph_problem:'z.B. Mein iPhone startet zufällig neu, auch mit 80% Akku. Werksreset hat nicht geholfen.',
+      ph_support:'z.B. Apple-Support hat Diagnose durchgeführt, keinen Fehler gefunden.',
+      ph_tried:'z.B. Werksreset, iOS Update, SIM-Karte getauscht...',
+      upload_title:'Diagnose-Datei hier ablegen',
+      howto:'Wie bekomme ich meine Gerätelogs?',
+      chain_title:'⛓ On-Chain Fortschritt',
+      s1:'Fall wird an GenLayer Studionet gesendet...',
+      s2:'KI-Validatoren analysieren unabhängig...',
+      s3:'Warte auf FINALIZED-Status...',
+      s4:'Urteil wird von der Chain gelesen...',
+      verdict_lbl:'⚖️ GenLayer Konsens — Endurteil',
+      confidence:'Validatoren-Konfidenz',
+      actions_title:'⚡ Empfohlene Maßnahmen',
+      proof_title:'⛓ On-Chain Beweis',
+      copy:'📋 Vollbericht kopieren', reset:'↩ Neuer Fall',
+      footer:'Betrieben von <span>GenLayer Studionet</span> · Optimistic Democracy · Kein Rechtsrat'
+    },
+    tr:{
+      connect:'Cüzdan Bağla', connected:'Bağlandı ✓',
+      submit:'⚖️ TRİBÜNALİ ÇAĞIR',
+      h1:'ÖDEDİN.<br><span>BOZDULAR.</span><br>ŞİMDİ İSPATLA.',
+      tagline:'4 AI doğrulayıcı. Crash logun. <em>Onların kararı. Zincirde.</em>',
+      case_title:'Dava Dosyası', log_title:'📁 Tanılama Logu — İsteğe bağlı ama güçlü',
+      lbl_brand:'Cihaz Markası', lbl_model:'Cihaz Modeli', lbl_duration:'Sorun Süresi',
+      lbl_warranty:'Garanti Var mı?', lbl_problem:'Sorununuzu açıklayın',
+      lbl_support:'Resmi destek ne dedi?', lbl_tried:'Ne denediniz?',
+      ph_model:'örn. iPhone 15 Pro Max',
+      ph_problem:'örn. iPhone %80 pil ile rastgele yeniden başlıyor. Fabrika ayarları yardımcı olmadı.',
+      ph_support:'örn. Apple tanılama yaptı, hata bulamadı, fabrika ayarlarına dönmemi söyledi.',
+      ph_tried:'örn. Fabrika ayarları, iOS güncellemesi, SIM kart değişimi...',
+      upload_title:'Tanılama dosyasını buraya bırakın',
+      howto:'Cihaz loglarım nasıl alabilirim?',
+      chain_title:'⛓ Zincir İlerleme',
+      s1:'Dava GenLayer'a gönderiliyor...',
+      s2:'AI Doğrulayıcılar bağımsız analiz ediyor...',
+      s3:'FINALIZED durumu bekleniyor...',
+      s4:'Karar zincirden okunuyor...',
+      verdict_lbl:'⚖️ GenLayer Konsensüs — Final Karar',
+      confidence:'Doğrulayıcı Güveni',
+      actions_title:'⚡ Önerilen Adımlar',
+      proof_title:'⛓ Zincir Kanıtı',
+      copy:'📋 Raporu Kopyala', reset:'↩ Yeni Dava',
+      footer:'<span>GenLayer Studionet</span> ile güçlendirildi · Hukuki tavsiye değildir'
+    },
+    ar:{
+      connect:'ربط المحفظة', connected:'متصل ✓',
+      submit:'⚖️ استدعاء المحكمة',
+      h1:'دفعت ثمنه.<br><span>أفسدوه.</span><br>الآن أثبت ذلك.',
+      tagline:'4 مدققي ذكاء اصطناعي. سجل الأعطال. <em>حكمهم. على السلسلة.</em>',
+      case_title:'ملف القضية', log_title:'📁 سجل التشخيص — اختياري لكن قوي',
+      lbl_brand:'العلامة التجارية', lbl_model:'موديل الجهاز', lbl_duration:'مدة المشكلة',
+      lbl_warranty:'تحت الضمان؟', lbl_problem:'صف مشكلتك',
+      lbl_support:'ماذا قال الدعم الرسمي؟', lbl_tried:'ماذا جربت؟',
+      ph_model:'مثال: iPhone 15 Pro Max',
+      ph_problem:'مثال: هاتفي يُعيد التشغيل عشوائياً بنسبة 80% بطارية.',
+      ph_support:'مثال: فحص Apple ولم يجد أي خطأ.',
+      ph_tried:'مثال: إعادة ضبط المصنع، تحديث iOS...',
+      upload_title:'أسقط ملف التشخيص هنا',
+      howto:'كيف أحصل على سجلات جهازي؟',
+      chain_title:'⛓ التقدم على السلسلة',
+      s1:'إرسال القضية إلى GenLayer...',
+      s2:'مدققو الذكاء الاصطناعي يحللون باستقلالية...',
+      s3:'انتظار حالة FINALIZED...',
+      s4:'قراءة الحكم من السلسلة...',
+      verdict_lbl:'⚖️ إجماع GenLayer — الحكم النهائي',
+      confidence:'ثقة المدققين',
+      actions_title:'⚡ الإجراءات الموصى بها',
+      proof_title:'⛓ إثبات على السلسلة',
+      copy:'📋 نسخ التقرير', reset:'↩ قضية جديدة',
+      footer:'مدعوم من <span>GenLayer Studionet</span> · ليس استشارة قانونية'
+    },
+    es:{
+      connect:'Conectar Wallet', connected:'Conectado ✓',
+      submit:'⚖️ CONVOCAR EL TRIBUNAL',
+      h1:'LO PAGASTE.<br><span>LO ROMPIERON.</span><br>AHORA PRUÉBALO.',
+      tagline:'4 validadores IA. Tu crash log. <em>Su veredicto. On-chain.</em>',
+      case_title:'Expediente del Caso', log_title:'📁 Log de Diagnóstico — Opcional pero poderoso',
+      lbl_brand:'Marca del Dispositivo', lbl_model:'Modelo', lbl_duration:'Duración del Problema',
+      lbl_warranty:'¿En Garantía?', lbl_problem:'Describe tu problema',
+      lbl_support:'¿Qué dijo el soporte oficial?', lbl_tried:'¿Qué has intentado?',
+      ph_model:'ej. iPhone 15 Pro Max',
+      ph_problem:'ej. Mi iPhone se reinicia aleatoriamente con 80% batería.',
+      ph_support:'ej. Apple hizo diagnósticos, no encontró errores.',
+      ph_tried:'ej. Restablecimiento de fábrica, actualizar iOS...',
+      upload_title:'Suelta tu archivo de diagnóstico aquí',
+      howto:'¿Cómo obtener los logs del dispositivo?',
+      chain_title:'⛓ Progreso On-Chain',
+      s1:'Enviando caso a GenLayer Studionet...',
+      s2:'Validadores IA analizando independientemente...',
+      s3:'Esperando estado FINALIZED...',
+      s4:'Leyendo veredicto de la cadena...',
+      verdict_lbl:'⚖️ Consenso GenLayer — Veredicto Final',
+      confidence:'Confianza de Validadores',
+      actions_title:'⚡ Acciones Recomendadas',
+      proof_title:'⛓ Prueba On-Chain',
+      copy:'📋 Copiar Informe Completo', reset:'↩ Nuevo Caso',
+      footer:'Impulsado por <span>GenLayer Studionet</span> · No es asesoramiento legal'
+    },
+    fr:{
+      connect:'Connecter Wallet', connected:'Connecté ✓',
+      submit:'⚖️ CONVOQUER LE TRIBUNAL',
+      h1:'VOUS AVEZ PAYÉ.<br><span>ILS L'ONT CASSÉ.</span><br>MAINTENANT PROUVEZ-LE.',
+      tagline:'4 validateurs IA. Votre crash log. <em>Leur verdict. On-chain.</em>',
+      case_title:'Dossier de Cas', log_title:'📁 Log de Diagnostic — Optionnel mais puissant',
+      lbl_brand:'Marque', lbl_model:'Modèle', lbl_duration:'Durée du Problème',
+      lbl_warranty:'Sous Garantie?', lbl_problem:'Décrivez votre problème',
+      lbl_support:'Que dit le support officiel?', lbl_tried:'Qu'avez-vous essayé?',
+      ph_model:'ex. iPhone 15 Pro Max',
+      ph_problem:'ex. Mon iPhone redémarre aléatoirement avec 80% batterie.',
+      ph_support:'ex. Apple a fait un diagnostic, n'a trouvé aucune erreur.',
+      ph_tried:'ex. Réinitialisation, mise à jour iOS...',
+      upload_title:'Déposez votre fichier de diagnostic ici',
+      howto:'Comment obtenir les logs de l'appareil?',
+      chain_title:'⛓ Progression On-Chain',
+      s1:'Envoi du cas à GenLayer Studionet...',
+      s2:'Validateurs IA analysant indépendamment...',
+      s3:'Attente du statut FINALIZED...',
+      s4:'Lecture du verdict depuis la chaîne...',
+      verdict_lbl:'⚖️ Consensus GenLayer — Verdict Final',
+      confidence:'Confiance des Validateurs',
+      actions_title:'⚡ Actions Recommandées',
+      proof_title:'⛓ Preuve On-Chain',
+      copy:'📋 Copier Rapport Complet', reset:'↩ Nouveau Cas',
+      footer:'Propulsé par <span>GenLayer Studionet</span> · Pas un conseil juridique'
+    },
+    ru:{
+      connect:'Подключить Кошелёк', connected:'Подключён ✓',
+      submit:'⚖️ СОЗВАТЬ ТРИБУНАЛ',
+      h1:'ВЫ ЗАПЛАТИЛИ.<br><span>ОНИ СЛОМАЛИ.</span><br>ТЕПЕРЬ ДОКАЖИТЕ.',
+      tagline:'4 AI-валидатора. Ваш crash log. <em>Их вердикт. On-chain.</em>',
+      case_title:'Дело', log_title:'📁 Диагностический Лог — Опционально но мощно',
+      lbl_brand:'Бренд', lbl_model:'Модель', lbl_duration:'Длительность Проблемы',
+      lbl_warranty:'На Гарантии?', lbl_problem:'Опишите проблему',
+      lbl_support:'Что сказала поддержка?', lbl_tried:'Что уже пробовали?',
+      ph_model:'напр. iPhone 15 Pro Max',
+      ph_problem:'напр. iPhone случайно перезагружается при 80% заряда.',
+      ph_support:'напр. Apple провела диагностику, ошибок не нашла.',
+      ph_tried:'напр. Сброс настроек, обновление iOS...',
+      upload_title:'Перетащите файл диагностики сюда',
+      howto:'Как получить логи устройства?',
+      chain_title:'⛓ Прогресс On-Chain',
+      s1:'Отправка дела в GenLayer Studionet...',
+      s2:'AI-валидаторы анализируют независимо...',
+      s3:'Ожидание статуса FINALIZED...',
+      s4:'Чтение вердикта из цепочки...',
+      verdict_lbl:'⚖️ Консенсус GenLayer — Финальный Вердикт',
+      confidence:'Уверенность Валидаторов',
+      actions_title:'⚡ Рекомендуемые Действия',
+      proof_title:'⛓ On-Chain Доказательство',
+      copy:'📋 Копировать Отчёт', reset:'↩ Новое Дело',
+      footer:'Работает на <span>GenLayer Studionet</span> · Не является юридической консультацией'
+    },
+    zh:{
+      connect:'连接钱包', connected:'已连接 ✓',
+      submit:'⚖️ 召集仲裁庭',
+      h1:'你付了钱。<br><span>他们弄坏了。</span><br>现在证明它。',
+      tagline:'4个AI验证者。你的崩溃日志。<em>他们的裁决。上链。</em>',
+      case_title:'案件档案', log_title:'📁 诊断日志 — 可选但强大',
+      lbl_brand:'设备品牌', lbl_model:'设备型号', lbl_duration:'问题持续时间',
+      lbl_warranty:'在保修期内？', lbl_problem:'描述你的问题',
+      lbl_support:'官方支持说了什么？', lbl_tried:'你已经尝试了什么？',
+      ph_model:'例如 iPhone 15 Pro Max',
+      ph_problem:'例如 我的iPhone在80%电量时随机重启。恢复出厂设置没有帮助。',
+      ph_support:'例如 Apple运行了诊断程序，没有发现硬件错误。',
+      ph_tried:'例如 恢复出厂设置，更新iOS，更换SIM卡...',
+      upload_title:'将设备日志文件拖放到此处',
+      howto:'如何获取设备日志？',
+      chain_title:'⛓ 链上进度',
+      s1:'正在将案件发送到GenLayer Studionet...',
+      s2:'AI验证者独立分析中...',
+      s3:'等待FINALIZED状态...',
+      s4:'从链上读取裁决...',
+      verdict_lbl:'⚖️ GenLayer共识 — 最终裁决',
+      confidence:'验证者置信度',
+      actions_title:'⚡ 建议措施',
+      proof_title:'⛓ 链上证明',
+      copy:'📋 复制完整报告', reset:'↩ 新案件',
+      footer:'由 <span>GenLayer Studionet</span> 驱动 · 不构成法律建议'
+    }
+  };
+
+  let currentLang = 'en';
+
+  function applyLang(lang) {
+    const t = TR[lang] || TR.en;
+    currentLang = lang;
+    document.body.style.direction = lang === 'ar' ? 'rtl' : 'ltr';
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+
+    document.querySelector('h1').innerHTML = t.h1;
+    document.querySelector('.tagline').innerHTML = t.tagline;
+    document.querySelector('#connectBtn').textContent = wallet ? t.connected : t.connect;
+    document.querySelector('#submitBtn').textContent = t.submit;
+    document.querySelector('#submitBtn').innerHTML = t.submit;
+
+    // Section titles
+    const titles = document.querySelectorAll('.section-title');
+    if (titles[0]) titles[0].childNodes[0].textContent = t.case_title;
+    if (titles[1]) titles[1].childNodes[0].textContent = t.log_title;
+
+    // Labels
+    const labels = document.querySelectorAll('label');
+    const labelMap = ['lbl_brand','lbl_model','lbl_duration','lbl_warranty','lbl_problem','lbl_support','lbl_tried'];
+    labels.forEach((l,i) => { if (t[labelMap[i]]) l.textContent = t[labelMap[i]]; });
+
+    // Placeholders
+    const model = document.getElementById('model'); if(model) model.placeholder = t.ph_model;
+    const prob = document.getElementById('problem'); if(prob) prob.placeholder = t.ph_problem;
+    const sup = document.getElementById('support'); if(sup) sup.placeholder = t.ph_support;
+    const tri = document.getElementById('tried'); if(tri) tri.placeholder = t.ph_tried;
+
+    document.querySelector('.upload-title').textContent = t.upload_title;
+    document.getElementById('howtoBtn').childNodes[1].textContent = ' ' + t.howto;
+
+    // Chain steps
+    document.querySelector('.chain-title').textContent = t.chain_title;
+    ['s1','s2','s3','s4'].forEach((id,i) => {
+      const el = document.getElementById(id);
+      if (el) el.childNodes[1].textContent = ' ' + t[id];
+    });
+
+    document.querySelector('.verdict-lbl').textContent = t.verdict_lbl;
+    document.querySelector('.bar-label span').textContent = t.confidence;
+    document.querySelector('.actions-title').textContent = t.actions_title;
+    document.querySelector('.proof-title').textContent = t.proof_title;
+    document.querySelector('.copy-btn').textContent = t.copy;
+    document.querySelector('.reset-btn').textContent = t.reset;
+    document.querySelector('.footer').innerHTML = t.footer;
+  }
+
+  document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => applyLang(b.dataset.lang)));
   // Auto-reconnect
   if (window.ethereum) {
     window.ethereum.request({method:'eth_accounts'}).then(a=>{ if(a.length>0){wallet=a[0];connectWallet();} }).catch(()=>{});

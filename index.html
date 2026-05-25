@@ -16,28 +16,28 @@
   body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
   .container{max-width:900px;margin:0 auto;padding:40px 20px 80px;position:relative;z-index:1;}
 
-  .header{text-align:center;margin-bottom:48px;animation:fadeDown 0.8s ease;}
-  .tribunal-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);border-radius:2px;padding:6px 16px;font-size:11px;letter-spacing:3px;color:var(--accent);text-transform:uppercase;margin-bottom:20px;}
-  .tribunal-badge .dot{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite;}
+  .header{text-align:center;margin-bottom:48px;}
+  .badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);border-radius:2px;padding:6px 16px;font-size:11px;letter-spacing:3px;color:var(--accent);text-transform:uppercase;margin-bottom:20px;}
+  .badge .dot{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite;}
   h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,8vw,80px);letter-spacing:3px;line-height:1.05;color:#fff;text-shadow:0 0 60px rgba(0,212,255,0.3);}
   h1 span{color:var(--accent);}
   .tagline{margin-top:16px;font-size:13px;color:var(--muted);letter-spacing:1px;}
   .tagline em{color:var(--accent2);font-style:normal;}
 
-  .wallet-bar{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:14px 20px;margin-bottom:24px;animation:fadeUp 0.6s ease 0.1s both;}
+  .wallet-bar{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:14px 20px;margin-bottom:24px;}
   .wallet-left{display:flex;align-items:center;gap:10px;}
-  .wallet-dot{width:8px;height:8px;border-radius:50%;background:var(--muted);}
-  .wallet-dot.on{background:var(--green);box-shadow:0 0 8px var(--green);}
-  .wallet-label{font-size:11px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
-  .wallet-addr{font-size:11px;color:var(--green);letter-spacing:1px;}
+  .wdot{width:8px;height:8px;border-radius:50%;background:var(--muted);}
+  .wdot.on{background:var(--green);box-shadow:0 0 8px var(--green);}
+  .wlabel{font-size:11px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
+  .waddr{font-size:11px;color:var(--green);}
   .connect-btn{padding:8px 20px;background:var(--accent);color:#000;border:none;border-radius:2px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;cursor:pointer;transition:all 0.2s;text-transform:uppercase;}
   .connect-btn:hover{background:#fff;}
   .connect-btn:disabled{opacity:0.5;cursor:default;}
 
-  .contract-info{background:var(--panel);border:1px solid rgba(0,255,136,0.15);border-radius:4px;padding:12px 20px;margin-bottom:24px;font-size:11px;color:var(--muted);display:flex;align-items:center;gap:10px;}
-  .contract-info span{color:var(--green);}
+  .contract-info{background:var(--panel);border:1px solid rgba(0,255,136,0.15);border-radius:4px;padding:12px 20px;margin-bottom:24px;font-size:11px;color:var(--muted);display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .contract-info span{color:var(--green);word-break:break-all;}
 
-  .form-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:32px;margin-bottom:24px;animation:fadeUp 0.6s ease 0.2s both;}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:32px;margin-bottom:24px;}
   .section-title{font-family:'Syne',sans-serif;font-size:11px;letter-spacing:3px;color:var(--accent);text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:12px;}
   .section-title::after{content:'';flex:1;height:1px;background:var(--border);}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
@@ -50,7 +50,6 @@
   select option{background:var(--panel);}
   textarea{resize:vertical;min-height:80px;line-height:1.6;}
 
-  .upload-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:32px;margin-bottom:24px;animation:fadeUp 0.6s ease 0.3s both;}
   .upload-zone{border:2px dashed var(--border);border-radius:4px;padding:28px;text-align:center;cursor:pointer;transition:all 0.3s;position:relative;}
   .upload-zone:hover,.upload-zone.over{border-color:var(--accent);background:rgba(0,212,255,0.04);}
   .upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
@@ -80,15 +79,15 @@
   .howto-text{font-size:11px;color:#8ca0b8;line-height:1.7;}
   .howto-text strong{color:var(--text);}
 
-  .error-msg{background:rgba(255,51,85,0.08);border:1px solid rgba(255,51,85,0.25);border-radius:3px;padding:14px;color:var(--red);font-size:12px;margin-bottom:16px;display:none;}
-  .error-msg.show{display:block;}
+  .err{background:rgba(255,51,85,0.08);border:1px solid rgba(255,51,85,0.25);border-radius:3px;padding:14px;color:var(--red);font-size:12px;margin-bottom:16px;display:none;}
+  .err.show{display:block;}
 
   .submit-btn{width:100%;margin-top:24px;padding:18px;background:var(--accent);color:#000;border:none;border-radius:3px;font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;cursor:pointer;transition:all 0.2s;}
   .submit-btn:hover:not(:disabled){background:#fff;box-shadow:0 0 30px rgba(0,212,255,0.4);transform:translateY(-1px);}
   .submit-btn:disabled{opacity:0.5;cursor:not-allowed;}
 
   /* RESULTS */
-  .results{display:none;animation:fadeUp 0.6s ease;}
+  .results{display:none;}
   .results.show{display:block;}
   .results-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border);}
   .results-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;color:var(--accent);}
@@ -99,8 +98,11 @@
   .chain-step{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--muted);margin-bottom:8px;}
   .chain-step.active{color:var(--text);}
   .chain-step.done{color:var(--green);}
-  .step-icon{width:20px;text-align:center;flex-shrink:0;}
+  .sicon{width:20px;text-align:center;flex-shrink:0;}
   .spinner{display:inline-block;width:12px;height:12px;border:1.5px solid var(--muted);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;}
+
+  .timer-display{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--accent);letter-spacing:4px;text-align:center;margin:8px 0;}
+  .phase-txt{font-size:11px;color:var(--muted);text-align:center;letter-spacing:1px;margin-bottom:12px;}
 
   .findings-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
   @media(max-width:600px){.findings-grid{grid-template-columns:1fr;}}
@@ -108,7 +110,7 @@
   .finding-role{font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
   .finding-text{font-size:12px;color:#8ca0b8;line-height:1.6;}
 
-  .verdict-card{background:var(--surface);border:2px solid var(--accent);border-radius:4px;padding:32px;display:none;animation:fadeUp 0.6s ease;position:relative;overflow:hidden;}
+  .verdict-card{background:var(--surface);border:2px solid var(--accent);border-radius:4px;padding:32px;display:none;position:relative;overflow:hidden;}
   .verdict-card::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top left,rgba(0,212,255,0.05),transparent 60%);pointer-events:none;}
   .verdict-card.show{display:block;}
   .verdict-lbl{font-size:10px;letter-spacing:3px;color:var(--accent);text-transform:uppercase;margin-bottom:10px;}
@@ -138,8 +140,6 @@
   .footer{text-align:center;margin-top:48px;font-size:10px;color:var(--muted);letter-spacing:2px;}
   .footer span{color:var(--accent);}
 
-  @keyframes fadeDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
-  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
   @keyframes spin{to{transform:rotate(360deg)}}
 </style>
@@ -148,34 +148,31 @@
 <div class="container">
 
   <div class="header">
-    <div class="tribunal-badge"><span class="dot"></span> GenLayer — Optimistic Democracy</div>
+    <div class="badge"><span class="dot"></span> GenLayer — Optimistic Democracy</div>
     <h1>YOU PAID FOR IT.<br><span>THEY BROKE IT.</span><br>NOW PROVE IT.</h1>
     <p class="tagline">4 AI validators. Your crash log. <em>Their verdict. On-chain.</em></p>
   </div>
 
-  <!-- WALLET -->
   <div class="wallet-bar">
     <div class="wallet-left">
-      <div class="wallet-dot" id="wDot"></div>
-      <span class="wallet-label" id="wLabel">Not connected</span>
-      <span class="wallet-addr" id="wAddr"></span>
+      <div class="wdot" id="wDot"></div>
+      <span class="wlabel" id="wLabel">Not connected</span>
+      <span class="waddr" id="wAddr"></span>
     </div>
     <button class="connect-btn" id="connectBtn" onclick="connectWallet()">Connect Wallet</button>
   </div>
 
-  <!-- CONTRACT INFO -->
   <div class="contract-info">
     ⛓ Contract: <span>0x52266b39411BFa3BCE7724AD632fB1E92D86E152</span> — GenLayer Studionet
   </div>
 
-  <!-- FORM -->
-  <div class="form-card">
+  <div class="card">
     <div class="section-title">Case Filing</div>
     <div class="grid2">
       <div class="field">
         <label>Device Brand</label>
         <select id="brand">
-          <option value="">Select brand...</option>
+          <option value="">Select...</option>
           <option value="Apple">Apple (iPhone / Mac / iPad)</option>
           <option value="Samsung">Samsung</option>
           <option value="Google">Google Pixel</option>
@@ -196,7 +193,7 @@
         <select id="duration">
           <option value="a few days">A few days</option>
           <option value="1-2 weeks">1–2 weeks</option>
-          <option value="1 month">About 1 month</option>
+          <option value="1 month">~1 month</option>
           <option value="several months">Several months</option>
           <option value="since purchase">Since purchase</option>
         </select>
@@ -205,7 +202,7 @@
         <label>Under Warranty?</label>
         <select id="warranty">
           <option value="yes, within warranty">Yes, within warranty</option>
-          <option value="warranty just expired">Warranty just expired</option>
+          <option value="warranty just expired">Just expired</option>
           <option value="no warranty">No warranty</option>
           <option value="unknown">Don't know</option>
         </select>
@@ -231,14 +228,13 @@
     </div>
   </div>
 
-  <!-- FILE UPLOAD -->
-  <div class="upload-card">
+  <div class="card">
     <div class="section-title">📁 Diagnostic Log — Optional but powerful</div>
     <div class="upload-zone" id="uploadZone">
       <input type="file" id="logFile" accept=".txt,.ips,.log,.json,.crash" onchange="handleFile(event)"/>
       <div class="upload-icon">📋</div>
       <div class="upload-title">Drop your device log file here</div>
-      <div class="upload-sub">Accepted: <b>.txt .ips .log .json .crash</b> — AI reads actual error codes, not just your description.</div>
+      <div class="upload-sub">Accepted: <b>.txt .ips .log .json .crash</b></div>
     </div>
     <div class="file-ok" id="fileOk">
       <div class="file-ok-row">
@@ -258,24 +254,24 @@
       <div class="howto-grid">
         <div class="howto-card">
           <div class="howto-brand">🍎 iPhone / iPad</div>
-          <div class="howto-text"><strong>Settings</strong> → <strong>Privacy & Security</strong> → <strong>Analytics & Improvements</strong> → <strong>Analytics Data</strong> → tap any .ips file → Share → Save to Files</div>
+          <div class="howto-text"><strong>Settings</strong> → <strong>Privacy & Security</strong> → <strong>Analytics & Improvements</strong> → <strong>Analytics Data</strong> → tap .ips file → Share → Save to Files</div>
         </div>
         <div class="howto-card">
           <div class="howto-brand">🤖 Android / Samsung</div>
-          <div class="howto-text">USB Debugging aktivieren → PC: <strong>adb bugreport log.txt</strong><br>Oder: Settings → About Phone → Diagnostic → Export</div>
+          <div class="howto-text">USB Debugging → PC: <strong>adb bugreport log.txt</strong><br>Or: Settings → About Phone → Diagnostic → Export</div>
         </div>
         <div class="howto-card">
           <div class="howto-brand">🍎 Mac</div>
-          <div class="howto-text"><strong>Console.app</strong> → Gerät links wählen → Fehler filtern → File → Export as .txt</div>
+          <div class="howto-text"><strong>Console.app</strong> → select device → filter errors → File → Export as .txt</div>
         </div>
         <div class="howto-card">
-          <div class="howto-brand">💡 Kein Log?</div>
-          <div class="howto-text">Kein Problem. Das Tribunal funktioniert auch ohne. Ein Log macht das Verdict <strong>deutlich präziser</strong>.</div>
+          <div class="howto-brand">💡 No log?</div>
+          <div class="howto-text">No problem. Works without one. A log just makes the verdict <strong>much more precise</strong>.</div>
         </div>
       </div>
     </div>
 
-    <div class="error-msg" id="errBox"></div>
+    <div class="err" id="errBox"></div>
     <button class="submit-btn" id="submitBtn" onclick="runTribunal()">⚖️ SUMMON THE TRIBUNAL</button>
   </div>
 
@@ -288,15 +284,12 @@
 
     <div class="chain-card">
       <div class="chain-title">⛓ On-Chain Progress</div>
-      <div class="chain-step" id="s1"><span class="step-icon">○</span> Sending case to GenLayer Studionet...</div>
-      <div class="chain-step" id="s2"><span class="step-icon">○</span> AI Validators analyzing independently...</div>
-      <div class="chain-step" id="s3"><span class="step-icon">○</span> Optimistic Democracy reaching consensus...</div>
-      <div class="chain-step" id="s4"><span class="step-icon">○</span> Verdict committed on-chain...</div>
-      <div id="checkVerdictBox" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
-        <div style="font-size:11px;color:var(--muted);margin-bottom:12px;letter-spacing:1px;">GenLayer validators need ~5 min. Click when ready to fetch verdict:</div>
-        <button onclick="manualCheckVerdict()" style="padding:10px 24px;background:var(--accent);color:#000;border:none;border-radius:3px;font-family:JetBrains Mono,monospace;font-size:12px;letter-spacing:2px;cursor:pointer;" id="checkBtn">⚖️ CHECK VERDICT NOW</button>
-        <div style="font-size:10px;color:var(--muted);margin-top:8px;">TX: <span id="txShort" style="color:var(--green)"></span></div>
-      </div>
+      <div class="chain-step" id="s1"><span class="sicon">○</span> Sending case to GenLayer Studionet...</div>
+      <div class="chain-step" id="s2"><span class="sicon">○</span> AI Validators analyzing independently...</div>
+      <div class="chain-step" id="s3"><span class="sicon">○</span> Waiting for FINALIZED status...</div>
+      <div class="chain-step" id="s4"><span class="sicon">○</span> Reading verdict from chain...</div>
+      <div class="timer-display" id="timerDisplay">00:00</div>
+      <div class="phase-txt" id="phaseTxt">Initializing...</div>
     </div>
 
     <div class="findings-grid" id="findingsGrid" style="display:none">
@@ -334,50 +327,44 @@
 
 <script>
   const CONTRACT = '0x52266b39411BFa3BCE7724AD632fB1E92D86E152';
-  const CHAIN_ID_HEX = '0xF24F'; // 61999
-  const RPC_URL = 'https://studio.genlayer.com/api';
+  const RPC = 'https://studio.genlayer.com/api';
 
   let wallet = null;
+  let glClient = null;
   let logContent = '';
   let logFileName = '';
   let caseData = {};
   let currentTx = '';
-  let parsedVerdict = null;
+  let timerInt = null;
+  let elapsed = 0;
 
-  // ── WALLET ──────────────────────────────────────────────────────────────────
+  // ── WALLET ──────────────────────────────────────────────────────────────
   async function connectWallet() {
-    if (!window.ethereum) { showErr('MetaMask not found. Please install MetaMask.'); return; }
+    if (!window.ethereum) { showErr('MetaMask not found.'); return; }
     try {
       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
       wallet = accounts[0];
 
-      // Switch to GenLayer Studionet — ignore if network already exists under different name
+      // Load genlayer-js and set up client (same as Second Opinion)
       try {
-        await window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: CHAIN_ID_HEX }] });
-      } catch (e) {
-        if (e.code === 4902) {
-          try {
-            await window.ethereum.request({
-              method: 'wallet_addEthereumChain',
-              params: [{ chainId: CHAIN_ID_HEX, chainName: 'GenLayer Studionet', rpcUrls: [RPC_URL], nativeCurrency: { name: 'GEN', symbol: 'GEN', decimals: 18 } }]
-            });
-          } catch (addErr) {
-            // Network already exists under different name — that's fine, continue
-            console.log('Network already exists:', addErr.message);
-          }
-        }
-        // Any other error — try to continue anyway
-      }
+        const g = await import('https://esm.sh/genlayer-js@latest');
+        const c = await import('https://esm.sh/genlayer-js@latest/chains');
+        glClient = g.createClient({ chain: c.studionet, account: wallet });
+
+        const hex = '0x' + c.studionet.id.toString(16);
+        try { await window.ethereum.request({ method: 'wallet_addEthereumChain', params: [{ chainId: hex, chainName: 'GenLayer Studio', rpcUrls: [RPC], nativeCurrency: { name: 'GEN', symbol: 'GEN', decimals: 18 } }] }); } catch(e) {}
+        try { await window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: hex }] }); } catch(e) {}
+      } catch(e) { console.warn('genlayer-js init:', e); }
 
       document.getElementById('wDot').classList.add('on');
       document.getElementById('wLabel').textContent = 'Connected';
       document.getElementById('wAddr').textContent = wallet.slice(0,6)+'...'+wallet.slice(-4);
       document.getElementById('connectBtn').textContent = '✓ Connected';
       document.getElementById('connectBtn').disabled = true;
-    } catch (e) { showErr('Wallet error: ' + e.message); }
+    } catch(e) { showErr('Wallet error: ' + e.message); }
   }
 
-  // ── FILE ────────────────────────────────────────────────────────────────────
+  // ── FILE ────────────────────────────────────────────────────────────────
   const zone = document.getElementById('uploadZone');
   zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('over'); });
   zone.addEventListener('dragleave', () => zone.classList.remove('over'));
@@ -390,22 +377,20 @@
       logFileName = file.name;
       document.getElementById('fileOk').classList.add('show');
       document.getElementById('fileName').textContent = '✓ ' + file.name;
-      document.getElementById('fileStats').textContent = 'SIZE: '+(file.size/1024).toFixed(1)+' KB  |  CHARS: '+logContent.length.toLocaleString();
+      document.getElementById('fileStats').textContent = 'SIZE: '+(file.size/1024).toFixed(1)+' KB';
       document.getElementById('filePreview').textContent = logContent.substring(0,280)+'...';
     };
     reader.readAsText(file);
   }
-  function removeFile() {
-    logContent=''; logFileName='';
-    document.getElementById('fileOk').classList.remove('show');
-    document.getElementById('logFile').value='';
-  }
-  function toggleHowto() {
-    document.getElementById('howtoBtn').classList.toggle('open');
-    document.getElementById('howtoBody').classList.toggle('open');
-  }
+  function removeFile() { logContent=''; logFileName=''; document.getElementById('fileOk').classList.remove('show'); document.getElementById('logFile').value=''; }
+  function toggleHowto() { document.getElementById('howtoBtn').classList.toggle('open'); document.getElementById('howtoBody').classList.toggle('open'); }
 
-  // ── MAIN ────────────────────────────────────────────────────────────────────
+  // ── TIMER ───────────────────────────────────────────────────────────────
+  function startTimer() { elapsed=0; clearInterval(timerInt); timerInt=setInterval(()=>{ elapsed++; const m=Math.floor(elapsed/60); const s=elapsed%60; document.getElementById('timerDisplay').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0'); },1000); }
+  function stopTimer() { clearInterval(timerInt); }
+  function setPhase(txt) { document.getElementById('phaseTxt').textContent = txt; }
+
+  // ── MAIN ────────────────────────────────────────────────────────────────
   async function runTribunal() {
     hideErr();
     const brand = document.getElementById('brand').value;
@@ -427,119 +412,94 @@
     document.getElementById('results').classList.add('show');
     document.getElementById('caseNum').textContent = 'CASE #' + caseNum;
     document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
-
-    setStep(1);
+    startTimer();
+    setStep(1); setPhase('Connecting to GenLayer Studionet...');
 
     try {
-      // Encode call as JSON calldata (GenLayer Python contract encoding)
-      const args = [
-        caseData.brand,
-        caseData.model,
-        caseData.problem,
-        caseData.support,
-        caseData.tried,
-        caseData.duration,
-        caseData.warranty,
-        logContent
-      ];
-      const calldata = encodeCall('analyze_case', args);
+      const g = await import('https://esm.sh/genlayer-js@latest');
+      const c = await import('https://esm.sh/genlayer-js@latest/chains');
 
-      const txHash = await window.ethereum.request({
-        method: 'eth_sendTransaction',
-        params: [{ from: wallet, to: CONTRACT, data: calldata, gas: '0x927C0' }] // 600000 gas
+      // Use glClient if available, otherwise create fresh one
+      const client = glClient || g.createClient({ chain: c.studionet, account: wallet });
+
+      setPhase('Sending transaction...');
+
+      // Write to contract — same pattern as Second Opinion
+      const txHash = await client.writeContract({
+        address: CONTRACT,
+        functionName: 'analyze_case',
+        args: [
+          caseData.brand,
+          caseData.model,
+          caseData.problem,
+          caseData.support,
+          caseData.tried,
+          caseData.duration,
+          caseData.warranty,
+          logContent
+        ],
+        value: BigInt(0)
       });
 
       currentTx = txHash;
       document.getElementById('proofTx').textContent = 'TX: ' + txHash;
       setStep(2);
+      setPhase('Waiting for validator consensus...');
 
-      // Poll for receipt
-      const receipt = await waitForReceipt(txHash);
-      setStep(3);
+      // Poll eth_getTransactionByHash until FINALIZED — same as Second Opinion
+      let finalized = false;
+      for (let i = 1; i <= 90; i++) {
+        await sleep(10000);
+        try {
+          const res = await fetch(RPC, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'eth_getTransactionByHash', params: [txHash] })
+          });
+          const data = await res.json();
+          const status = (data?.result?.status || '').toUpperCase();
+          setPhase(`Status: ${status || 'PENDING'} — ${i*10}s (attempt ${i}/90)`);
 
-      if (!receipt || receipt.status !== '0x1') throw new Error('Transaction failed on-chain.');
+          if (status === 'FINALIZED') {
+            finalized = true;
+            setStep(3);
+            setPhase('Consensus reached! Reading verdict...');
+            break;
+          }
+          if (i === 30) setStep(2);
+          if (i === 60) setPhase(`Still processing... ${i*10}s — validators are thorough`);
+        } catch(e) { setPhase(`Attempt ${i}/90 — ${i*10}s`); }
+      }
 
-      setStep(3);
-      await sleep(1000);
+      if (!finalized) throw new Error('Timeout: validators did not finalize in 15 minutes. Check Studio for TX status.');
 
-      // Show manual check button — GenLayer needs time for validator consensus
-      document.getElementById('checkVerdictBox').style.display = 'block';
-      document.getElementById('txShort').textContent = currentTx.slice(0,10) + '...' + currentTx.slice(-6);
+      await sleep(2000);
+      setStep(4);
+      setPhase('Reading verdict from chain...');
 
-    } catch (e) {
+      // Read with genlayer-js readContract — same as Second Opinion
+      const readClient = g.createClient({ chain: c.studionet });
+      const verdictRaw = await readClient.readContract({ address: CONTRACT, functionName: 'get_verdict', args: [] });
+      const findingsRaw = await readClient.readContract({ address: CONTRACT, functionName: 'get_findings', args: [] });
+      const actionsRaw = await readClient.readContract({ address: CONTRACT, functionName: 'get_actions', args: [] });
+
+      stopTimer();
+      showResults(String(verdictRaw||''), String(findingsRaw||''), String(actionsRaw||''));
+
+    } catch(e) {
+      stopTimer();
       showErr('Error: ' + (e.message || e));
       document.getElementById('submitBtn').disabled = false;
     }
   }
 
-  function encodeCall(method, args) {
-    // GenLayer uses JSON-encoded calldata
-    const payload = JSON.stringify({ method, args });
-    let hex = '0x';
-    for (let i = 0; i < payload.length; i++) hex += payload.charCodeAt(i).toString(16).padStart(2,'0');
-    return hex;
-  }
-
-  async function readContract(method, args) {
-    // Try multiple decoding strategies for GenLayer response
-    const urls = [RPC_URL, "https://studio.genlayer.com/api"];
-    for (const url of urls) {
-      try {
-        const response = await fetch(url, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            jsonrpc: "2.0", method: "eth_call",
-            params: [{ to: CONTRACT, data: encodeCall(method, args) }, "latest"],
-            id: Date.now()
-          })
-        });
-        const data = await response.json();
-        const raw = data.result;
-        if (!raw || raw === "0x") continue;
-        const hex = raw.startsWith("0x") ? raw.slice(2) : raw;
-        // Strategy 1: ABI-encoded string (skip first 64 bytes = offset+length)
-        try {
-          const lenHex = hex.slice(64, 128);
-          const len = parseInt(lenHex, 16);
-          if (len > 0 && len < 10000) {
-            const strHex = hex.slice(128, 128 + len * 2);
-            let s = "";
-            for (let i = 0; i < strHex.length; i += 2) s += String.fromCharCode(parseInt(strHex.substr(i,2),16));
-            if (s.length > 5) return s;
-          }
-        } catch(e1) {}
-        // Strategy 2: raw ASCII extraction
-        let str = "";
-        for (let i = 0; i < hex.length; i += 2) {
-          const code = parseInt(hex.substr(i,2),16);
-          if (code > 31 && code < 127) str += String.fromCharCode(code);
-        }
-        if (str.length > 5) return str;
-      } catch(e) { console.error("readContract error:", url, e); }
-    }
-    return "";
-  }
-
-  async function waitForReceipt(txHash, timeout = 120000) {
-    const start = Date.now();
-    while (Date.now() - start < timeout) {
-      try {
-        const r = await window.ethereum.request({ method: 'eth_getTransactionReceipt', params: [txHash] });
-        if (r && r.blockNumber) return r;
-      } catch(e) {}
-      await sleep(3000);
-    }
-    throw new Error('Timeout: Transaction not confirmed after 2 minutes.');
-  }
-
   function showResults(verdictRaw, findingsRaw, actionsRaw) {
-    // Parse pipe-delimited strings from contract
-    // last_verdict = "TITLE | VERDICT_TYPE | CONFIDENCE% | summary"
-    // last_findings = "Hardware: X | Software: Y | Legal: Z | Statistical: W"
-    // last_actions = "1. A | 2. B | 3. C | 4. D"
+    console.log('verdictRaw:', verdictRaw);
+    console.log('findingsRaw:', findingsRaw);
+    console.log('actionsRaw:', actionsRaw);
 
-    let title = '—', verdictType = 'INCONCLUSIVE', confidence = 75, summary = verdictRaw;
+    // Parse: "TITLE | VERDICT_TYPE | CONFIDENCE% | summary"
+    let title='VERDICT', verdictType='INCONCLUSIVE', confidence=75, summary=verdictRaw;
     try {
       const parts = verdictRaw.split(' | ');
       if (parts.length >= 4) {
@@ -547,20 +507,22 @@
         verdictType = parts[1];
         confidence = parseInt(parts[2]) || 75;
         summary = parts.slice(3).join(' | ');
+      } else if (parts.length === 3) {
+        title = parts[0]; verdictType = parts[1]; summary = parts[2];
       }
     } catch(e) {}
 
-    // Findings
+    // Findings: "Hardware: X | Software: Y | Legal: Z | Statistical: W"
     try {
       const fp = findingsRaw.split(' | ');
-      document.getElementById('fHw').textContent = (fp[0]||'').replace('Hardware: ','');
-      document.getElementById('fSw').textContent = (fp[1]||'').replace('Software: ','');
-      document.getElementById('fLegal').textContent = (fp[2]||'').replace('Legal: ','');
-      document.getElementById('fStat').textContent = (fp[3]||'').replace('Statistical: ','');
+      document.getElementById('fHw').textContent = (fp[0]||'').replace('Hardware: ','') || '—';
+      document.getElementById('fSw').textContent = (fp[1]||'').replace('Software: ','') || '—';
+      document.getElementById('fLegal').textContent = (fp[2]||'').replace('Legal: ','') || '—';
+      document.getElementById('fStat').textContent = (fp[3]||'').replace('Statistical: ','') || '—';
       document.getElementById('findingsGrid').style.display = 'grid';
     } catch(e) {}
 
-    // Actions
+    // Actions: "1. A | 2. B | 3. C | 4. D"
     try {
       const ap = actionsRaw.split(' | ');
       document.getElementById('actionsList').innerHTML = ap.map(a =>
@@ -568,59 +530,30 @@
       ).join('');
     } catch(e) {}
 
-    // Verdict card
     const main = document.getElementById('verdictMain');
     let cls = 'unclear';
-    if (verdictType.includes('MANUFACTURER')) cls = 'fault';
-    else if (verdictType.includes('POSSIBLE')) cls = 'partial';
-    else if (verdictType.includes('USER')) cls = 'user';
+    if (verdictType.includes('MANUFACTURER')) cls='fault';
+    else if (verdictType.includes('POSSIBLE')) cls='partial';
+    else if (verdictType.includes('USER')) cls='user';
+
     main.textContent = title;
     main.className = 'verdict-main ' + cls;
     document.getElementById('verdictSummary').textContent = summary;
     document.getElementById('barPct').textContent = confidence + '%';
-    setTimeout(() => { document.getElementById('barFill').style.width = confidence + '%'; }, 200);
+    setTimeout(()=>{ document.getElementById('barFill').style.width = confidence+'%'; }, 200);
 
     document.getElementById('verdictCard').classList.add('show');
-    document.getElementById('verdictCard').scrollIntoView({ behavior: 'smooth' });
-
-    parsedVerdict = { title, verdictType, confidence, summary };
-  }
-
-  async function manualCheckVerdict() {
-    const btn = document.getElementById('checkBtn');
-    btn.textContent = '⏳ Fetching...';
-    btn.disabled = true;
-    try {
-      const verdictRaw = await readContract('get_verdict', []);
-      const findingsRaw = await readContract('get_findings', []);
-      const actionsRaw = await readContract('get_actions', []);
-      console.log('verdictRaw:', verdictRaw);
-      console.log('findingsRaw:', findingsRaw);
-      console.log('actionsRaw:', actionsRaw);
-      if (!verdictRaw || verdictRaw.length < 5) {
-        btn.textContent = '⚖️ CHECK VERDICT NOW';
-        btn.disabled = false;
-        showErr('Verdict not ready yet — validators still working. Try again in 1-2 min.');
-        return;
-      }
-      setStep(4);
-      document.getElementById('checkVerdictBox').style.display = 'none';
-      showResults(verdictRaw, findingsRaw, actionsRaw);
-    } catch(e) {
-      btn.textContent = '⚖️ CHECK VERDICT NOW';
-      btn.disabled = false;
-      showErr('Could not fetch verdict: ' + e.message);
-    }
+    document.getElementById('verdictCard').scrollIntoView({ behavior:'smooth', block:'start' });
   }
 
   function setStep(n) {
-    for (let i = 1; i <= 4; i++) {
-      const el = document.getElementById('s' + i);
-      const icon = el.querySelector('.step-icon');
+    for (let i=1;i<=4;i++) {
+      const el = document.getElementById('s'+i);
+      const icon = el.querySelector('.sicon');
       el.classList.remove('active','done');
-      if (i < n) { el.classList.add('done'); icon.textContent = '✓'; }
-      else if (i === n) { el.classList.add('active'); icon.innerHTML = '<span class="spinner"></span>'; }
-      else { icon.textContent = '○'; }
+      if (i<n) { el.classList.add('done'); icon.textContent='✓'; }
+      else if (i===n) { el.classList.add('active'); icon.innerHTML='<span class="spinner"></span>'; }
+      else { icon.textContent='○'; }
     }
   }
 
@@ -630,14 +563,13 @@
   function copyReport() {
     const lines = [
       'TECH TRIBUNAL — OFFICIAL CASE REPORT',
-      'Date: ' + new Date().toLocaleDateString(),
-      currentTx ? 'On-Chain TX: ' + currentTx : '',
-      logFileName ? 'Log File: ' + logFileName : 'No log file',
+      'Date: '+new Date().toLocaleDateString(),
+      currentTx ? 'On-Chain TX: '+currentTx : '',
+      logFileName ? 'Log: '+logFileName : 'No log file',
       '',
-      'DEVICE: ' + caseData.brand + ' ' + caseData.model,
-      'Duration: ' + caseData.duration + ' | Warranty: ' + caseData.warranty,
-      'Problem: ' + caseData.problem,
-      'Support said: ' + (caseData.support||'not provided'),
+      'DEVICE: '+caseData.brand+' '+caseData.model,
+      'Problem: '+caseData.problem,
+      'Support said: '+(caseData.support||'not provided'),
       '',
       '--- VERDICT ---',
       document.getElementById('verdictMain').textContent,
@@ -647,27 +579,28 @@
       ...Array.from(document.querySelectorAll('.action-row')).map((el,i)=>`${i+1}. ${el.textContent}`)
     ];
     navigator.clipboard.writeText(lines.filter(Boolean).join('\n'));
-    const btn = document.querySelector('.copy-btn');
-    btn.textContent = '✓ Copied!';
-    setTimeout(()=>btn.textContent='📋 Copy Full Report', 2000);
+    const btn=document.querySelector('.copy-btn');
+    btn.textContent='✓ Copied!';
+    setTimeout(()=>btn.textContent='📋 Copy Full Report',2000);
   }
 
   function resetAll() {
-    document.getElementById('submitBtn').disabled = false;
+    document.getElementById('submitBtn').disabled=false;
     document.getElementById('results').classList.remove('show');
     document.getElementById('verdictCard').classList.remove('show');
-    document.getElementById('findingsGrid').style.display = 'none';
-    document.getElementById('barFill').style.width = '0%';
-    currentTx = ''; parsedVerdict = null;
+    document.getElementById('findingsGrid').style.display='none';
+    document.getElementById('barFill').style.width='0%';
+    currentTx=''; stopTimer();
+    document.getElementById('timerDisplay').textContent='00:00';
     removeFile();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({top:0,behavior:'smooth'});
   }
 
-  function sleep(ms) { return new Promise(r=>setTimeout(r,ms)); }
+  function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
 
   // Auto-reconnect
   if (window.ethereum) {
-    window.ethereum.request({ method: 'eth_accounts' }).then(a => { if (a.length) { wallet = a[0]; connectWallet(); } });
+    window.ethereum.request({method:'eth_accounts'}).then(a=>{ if(a.length>0){wallet=a[0];connectWallet();} }).catch(()=>{});
   }
 </script>
 </body>

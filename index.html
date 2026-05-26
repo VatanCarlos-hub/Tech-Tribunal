@@ -683,6 +683,12 @@ async function connectWallet() {
   try {
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
     wallet = accounts[0];
+    // Update UI immediately after getting account
+    document.getElementById('wDot').classList.add('on');
+    document.getElementById('wAddr').textContent = wallet.slice(0,6)+'...'+wallet.slice(-4);
+    document.getElementById('connectBtn').textContent = '✓ Connected';
+    document.getElementById('connectBtn').disabled = true;
+    // Load genlayer-js in background
     try {
       const g = await import('https://esm.sh/genlayer-js@latest');
       const c = await import('https://esm.sh/genlayer-js@latest/chains');
@@ -690,11 +696,7 @@ async function connectWallet() {
       const hex = '0x' + c.studionet.id.toString(16);
       try { await window.ethereum.request({ method: 'wallet_addEthereumChain', params: [{ chainId: hex, chainName: 'GenLayer Studio', rpcUrls: [RPC], nativeCurrency: { name: 'GEN', symbol: 'GEN', decimals: 18 } }] }); } catch(e) {}
       try { await window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: hex }] }); } catch(e) {}
-    } catch(e) { console.warn('genlayer-js:', e); }
-    document.getElementById('wDot').classList.add('on');
-    document.getElementById('wAddr').textContent = wallet.slice(0,6)+'...'+wallet.slice(-4);
-    document.getElementById('connectBtn').textContent = '✓ Connected';
-    document.getElementById('connectBtn').disabled = true;
+    } catch(e) { console.warn('genlayer-js init (non-fatal):', e); }
   } catch(e) { showErr('Wallet error: ' + e.message); }
 }
 

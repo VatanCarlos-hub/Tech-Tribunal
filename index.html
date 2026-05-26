@@ -606,6 +606,10 @@ select option{background:#fff;}
             <div class="timer-num" id="timerNum">00:00</div>
             <div class="phase-txt" id="phaseTxt">Initializing...</div>
           </div>
+          <div id="manualCheckBox" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+            <p style="font-size:12px;color:var(--ink3);font-family:var(--mono);margin-bottom:10px;">GenLayer validators need ~5–10 min. Click when ready:</p>
+            <button id="checkVerdictBtn" onclick="checkVerdictManually()" style="padding:10px 22px;background:var(--ink);color:var(--cream);border:none;border-radius:6px;font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;">⚖ Check Verdict Now</button>
+          </div>
         </div>
 
         <div class="findings-grid" id="findingsGrid" style="display:none">
@@ -746,25 +750,36 @@ async function runTribunal() {
     currentTx=txHash;
     document.getElementById('proofTx').textContent='TX: '+txHash;
     setStep(2); setPhase('Waiting for validator consensus...');
+    // Poll for finalization — accept multiple final status names
+    const FINAL_STATUSES = ['FINALIZED','ACCEPTED','CONFIRMED','SUCCESS','0x1'];
     let finalized=false;
-    for (let i=1;i<=90;i++) {
-      await sleep(10000);
+    for (let i=1;i<=120;i++) {
+      await sleep(8000);
       try {
         const res = await fetch(RPC,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:'eth_getTransactionByHash',params:[txHash]})});
         const data = await res.json();
-        const status = (data?.result?.status||'').toUpperCase();
-        setPhase(`Status: ${status||'PENDING'} — ${i*10}s`);
-        if (status==='FINALIZED') { finalized=true; setStep(3); setPhase('Consensus reached! Reading verdict...'); break; }
-      } catch(e) { setPhase(`Polling... ${i*10}s`); }
+        const raw = data?.result || {};
+        const status = (raw.status||raw.consensus_data?.status||'').toUpperCase();
+        setPhase(`Status: ${status||'PENDING'} — ${i*8}s elapsed`);
+        console.log('TX status:', status, raw);
+        if (FINAL_STATUSES.some(s => status.includes(s))) {
+          finalized=true; setStep(3); setPhase('Consensus reached! Reading verdict...'); break;
+        }
+      } catch(e) { setPhase(`Polling... ${i*8}s`); }
     }
-    if (!finalized) throw new Error('Timeout: validators did not finalize. Check Studio for TX status.');
-    await sleep(2000); setStep(4); setPhase('Reading verdict...');
-    const readClient = g.createClient({ chain: c.studionet });
-    const verdictRaw = await readClient.readContract({ address: CONTRACT, functionName: 'get_verdict', args: [] });
-    const findingsRaw = await readClient.readContract({ address: CONTRACT, functionName: 'get_findings', args: [] });
-    const actionsRaw = await readClient.readContract({ address: CONTRACT, functionName: 'get_actions', args: [] });
-    stopTimer();
-    showResults(String(verdictRaw||''), String(findingsRaw||''), String(actionsRaw||''));
+
+    // Show manual check button regardless of finalization
+    document.getElementById('manualCheckBox').style.display='block';
+
+    if (!finalized) {
+      setPhase('Auto-detection timed out. Click "Check Verdict" when ready.');
+      stopTimer();
+      document.getElementById('submitBtn').disabled=false;
+      return;
+    }
+
+    await sleep(2000); setStep(4); setPhase('Reading verdict from chain...');
+    await fetchAndShowVerdict(g, c, wallet);
   } catch(e) {
     stopTimer(); showErr('Error: '+(e.message||e));
     document.getElementById('submitBtn').disabled=false;
@@ -830,6 +845,43 @@ function resetAll(){
   currentTx='';stopTimer();document.getElementById('timerNum').textContent='00:00';
   removeFile();window.scrollTo({top:0,behavior:'smooth'});
 }
+async function fetchAndShowVerdict(g, c, addr) {
+  try {
+    const readClient = g.createClient({ chain: c.studionet });
+    // Match Second Opinion pattern exactly — pass wallet address as arg
+    const verdictRaw = await readClient.readContract({ address: CONTRACT, functionName: 'get_verdict', args: [] });
+    const findingsRaw = await readClient.readContract({ address: CONTRACT, functionName: 'get_findings', args: [] });
+    const actionsRaw = await readClient.readContract({ address: CONTRACT, functionName: 'get_actions', args: [] });
+    console.log('verdictRaw:', verdictRaw);
+    console.log('findingsRaw:', findingsRaw);
+    console.log('actionsRaw:', actionsRaw);
+    const v = String(verdictRaw||'').replace(/^"|"$/g,'');
+    const f = String(findingsRaw||'').replace(/^"|"$/g,'');
+    const a = String(actionsRaw||'').replace(/^"|"$/g,'');
+    if (!v || v.length < 5) throw new Error('Verdict empty — validators may still be working.');
+    stopTimer();
+    setStep(4);
+    document.getElementById('manualCheckBox').style.display='none';
+    showResults(v, f, a);
+  } catch(e) {
+    throw e;
+  }
+}
+
+async function checkVerdictManually() {
+  const btn = document.getElementById('checkVerdictBtn');
+  btn.textContent = '⏳ Fetching...'; btn.disabled=true;
+  try {
+    const g = await import('https://esm.sh/genlayer-js@latest');
+    const c = await import('https://esm.sh/genlayer-js@latest/chains');
+    await fetchAndShowVerdict(g, c, wallet);
+    document.getElementById('submitBtn').disabled=false;
+  } catch(e) {
+    btn.textContent='⚖ Check Verdict Now'; btn.disabled=false;
+    showErr('Not ready yet: ' + e.message + ' — try again in 1–2 min.');
+  }
+}
+
 function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
 if(window.ethereum){window.ethereum.request({method:'eth_accounts'}).then(a=>{if(a.length)connectWallet();}).catch(()=>{});}
 

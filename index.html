@@ -27,7 +27,7 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
 .top-inner{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:rgba(255,255,255,.5);text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;padding:0 16px;}
 .top-dot{width:4px;height:4px;border-radius:50%;background:var(--gold2);}
 .site-header{background:var(--white);border-bottom:1px solid var(--border);padding:22px 0;}
-.header-inner{max-width:960px;margin:0 auto;padding:0 32px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.header-inner{max-width:960px;margin:0 auto;padding:0 32px;display:flex;align-items:center;gap:16px;}
 .logo{display:flex;align-items:center;gap:14px;}
 .logo-icon{width:42px;height:42px;border-radius:10px;background:var(--ink);display:flex;align-items:center;justify-content:center;font-size:20px;}
 .logo-text{font-family:var(--serif);font-size:21px;font-weight:700;color:var(--ink);}
@@ -40,7 +40,7 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
 .lang-btn:hover,.lang-btn.active{border-color:var(--gold);color:var(--gold);background:var(--gold-tint);}
 .page{max-width:960px;margin:0 auto;padding:36px 32px 100px;display:grid;grid-template-columns:1fr 290px;gap:28px;align-items:start;}
 @media(max-width:720px){.page{grid-template-columns:1fr;padding:24px 16px 80px;}.sidebar{order:-1;}}
-.hero{max-width:960px;margin:32px auto 0;padding:0 32px 0;}
+.hero{max-width:960px;margin:32px auto 0;padding:0 32px;}
 .hero-eye{font-family:var(--mono);font-size:10px;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:10px;}
 .hero-eye::before{content:'';width:18px;height:1px;background:var(--gold2);display:inline-block;}
 .hero h1{font-family:var(--serif);font-size:clamp(28px,5vw,52px);font-weight:700;letter-spacing:-.02em;line-height:1.15;color:var(--ink);margin-bottom:10px;}
@@ -94,21 +94,24 @@ select option{background:var(--white);}
 .l-title{font-family:var(--serif);font-size:22px;font-weight:700;font-style:italic;color:var(--ink);margin-bottom:5px;}
 .l-sub{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--ink3);text-transform:uppercase;margin-bottom:20px;}
 .timer{font-family:var(--mono);font-size:44px;font-weight:300;color:var(--gold2);letter-spacing:.08em;margin-bottom:10px;}
-.l-phase{font-size:14px;color:var(--ink3);font-style:italic;font-family:var(--serif);}
-/* VALIDATORS */
-.validators-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px;display:none;}
-.validators-grid.show{display:grid;}
-.val-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px;box-shadow:0 1px 4px rgba(28,31,29,.05);}
-.val-role{font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--gold);text-transform:uppercase;margin-bottom:4px;}
-.val-status{font-size:11px;color:var(--ink3);display:flex;align-items:center;gap:6px;margin-bottom:8px;}
-.val-dot{width:6px;height:6px;border-radius:50%;background:var(--border2);}
-.val-dot.active{background:var(--gold2);animation:pulse 1.5s infinite;}
-.val-dot.done{background:var(--green3);}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.val-text{font-size:12px;color:var(--ink2);line-height:1.6;display:none;}
-.val-text.show{display:block;}
-.val-verdict{display:none;margin-top:8px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;padding:3px 8px;border-radius:3px;text-transform:uppercase;}
-.val-verdict.show{display:inline-block;}
+.l-phase{font-size:14px;color:var(--ink3);font-style:italic;font-family:var(--serif);margin-bottom:8px;}
+.retry-count{font-family:var(--mono);font-size:10px;color:var(--border2);letter-spacing:.1em;}
+.prog-bar{height:3px;background:var(--border);border-radius:2px;overflow:hidden;max-width:200px;margin:12px auto 0;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));width:0%;transition:width 1s linear;border-radius:2px;}
+/* STEPS */
+.steps-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-top:20px;box-shadow:var(--shadow);display:none;}
+.steps-card.show{display:block;}
+.steps-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.steps-lbl::after{content:'';flex:1;height:1px;background:var(--border);}
+.step-row{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--ink3);}
+.step-row:last-child{border-bottom:none;padding-bottom:0;}
+.step-row:first-child{padding-top:0;}
+.step-row.active{color:var(--ink);}
+.step-row.done{color:var(--green2);}
+.step-icon{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;font-family:var(--mono);}
+.step-row.done .step-icon{background:var(--green2);border-color:var(--green2);color:#fff;}
+.step-row.active .step-icon{border-color:var(--gold2);}
+.step-spinner{display:inline-block;width:10px;height:10px;border:1.5px solid var(--border2);border-top-color:var(--gold2);border-radius:50%;animation:spin .9s linear infinite;}
 /* RESULT */
 #result{display:none;margin-top:20px;}
 .verdict-card{border-radius:12px;overflow:hidden;margin-bottom:18px;box-shadow:var(--shadow-lg);}
@@ -132,15 +135,15 @@ select option{background:var(--white);}
 .findings-lbl::after{content:'';flex:1;height:1px;background:var(--border2);}
 .finding-row{display:flex;gap:10px;font-size:13px;color:var(--ink2);margin-bottom:10px;line-height:1.6;}
 .finding-row:last-child{margin-bottom:0;}
-.finding-row .fi{font-family:var(--mono);font-size:9px;color:var(--gold);min-width:80px;flex-shrink:0;padding-top:2px;}
+.finding-row .fi{font-family:var(--mono);font-size:9px;color:var(--gold);min-width:80px;flex-shrink:0;padding-top:2px;text-transform:uppercase;}
 .actions-section{background:var(--paper2);border:1px solid var(--border);border-radius:8px;padding:18px;margin-bottom:16px;}
 .actions-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:10px;}
 .actions-lbl::after{content:'';flex:1;height:1px;background:var(--border2);}
 .action-row{display:flex;gap:10px;font-size:13px;color:var(--ink2);margin-bottom:9px;line-height:1.6;}
 .action-row:last-child{margin-bottom:0;}
 .action-row::before{content:'✦';color:var(--gold2);font-size:9px;flex-shrink:0;margin-top:4px;}
-.log-evidence{background:var(--green-tint);border:1px solid rgba(26,92,62,.2);border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:var(--green);font-family:var(--mono);display:none;}
-.log-evidence.show{display:block;}
+.log-badge{background:var(--green-tint);border:1px solid rgba(26,92,62,.2);border-radius:6px;padding:8px 14px;margin-bottom:14px;font-size:12px;color:var(--green);font-family:var(--mono);display:none;}
+.log-badge.show{display:block;}
 .onchain{display:flex;align-items:center;gap:6px;padding-top:12px;border-top:1px solid var(--border);margin-bottom:16px;}
 .oc-dot{width:6px;height:6px;border-radius:50%;background:var(--green3);flex-shrink:0;}
 .oc-txt{font-family:var(--mono);font-size:9px;color:var(--ink3);word-break:break-all;}
@@ -165,6 +168,10 @@ select option{background:var(--white);}
 .info-title{font-family:var(--serif);font-size:16px;font-weight:700;color:#fff;margin-bottom:8px;font-style:italic;position:relative;}
 .info-txt{font-size:13px;line-height:1.7;position:relative;}
 .info-txt strong{color:#fff;}
+.contract-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin-bottom:18px;}
+.contract-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:8px;}
+.contract-addr{font-family:var(--mono);font-size:9px;color:var(--ink3);word-break:break-all;line-height:1.8;}
+.contract-addr span{color:var(--green2);}
 /* MODAL */
 .overlay{display:none;position:fixed;inset:0;background:rgba(28,31,29,.6);z-index:9999;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px);}
 .modal{background:var(--white);border:1px solid var(--border);border-radius:14px;max-width:420px;width:100%;padding:34px;position:relative;box-shadow:var(--shadow-lg);animation:rise .3s both;}
@@ -187,9 +194,9 @@ select option{background:var(--white);}
 
 <div class="top-strip">
   <div class="top-inner">
-    <span>5 Independent AI Validators</span><span class="top-dot"></span>
-    <span>Log File Analysis</span><span class="top-dot"></span>
-    <span>On-Chain Proof via GenLayer</span>
+    <span>5 GenLayer AI Validators</span><span class="top-dot"></span>
+    <span>Optimistic Democracy</span><span class="top-dot"></span>
+    <span>On-Chain Verdict</span>
   </div>
 </div>
 
@@ -219,7 +226,7 @@ select option{background:var(--white);}
 <div class="hero">
   <div class="hero-eye">AI Device Justice</div>
   <h1 id="hero-h1">You paid for it.<br><em>They broke it.</em><br>Now prove it.</h1>
-  <p class="hero-sub" id="hero-sub"><strong>5 independent AI validators</strong> analyze your device complaint — including your actual log file. Get an on-chain verdict you can use as evidence.</p>
+  <p class="hero-sub" id="hero-sub"><strong>5 independent GenLayer AI validators</strong> analyze your device complaint via Optimistic Democracy — including your actual log file. Verdict stored on-chain.</p>
 </div>
 
 <main class="page">
@@ -296,10 +303,10 @@ select option{background:var(--white);}
         </button>
         <div class="howto-body" id="howtoBody">
           <div class="howto-grid">
-            <div class="howto-card"><div class="howto-brand">🍎 iPhone / iPad</div><div class="howto-text"><strong>Settings</strong> → Privacy & Security → Analytics & Improvements → Analytics Data → tap .ips file → Share → Save to Files → rename to .txt</div></div>
-            <div class="howto-card"><div class="howto-brand">🤖 Android / Samsung</div><div class="howto-text">Enable USB Debugging → PC: <strong>adb bugreport log.txt</strong><br>Or: Settings → About Phone → Diagnostic → Export</div></div>
-            <div class="howto-card"><div class="howto-brand">🍎 Mac</div><div class="howto-text"><strong>Console.app</strong> → select device → filter errors → File → Export as .txt</div></div>
-            <div class="howto-card"><div class="howto-brand">💡 No log file?</div><div class="howto-text">No problem — the Tribunal works without one. A log file makes the verdict <strong>objective evidence</strong>.</div></div>
+            <div class="howto-card"><div class="howto-brand">🍎 iPhone / iPad</div><div class="howto-text"><strong>Settings</strong> → Privacy → Analytics → Analytics Data → tap .ips file → Share → Save to Files → rename to .txt</div></div>
+            <div class="howto-card"><div class="howto-brand">🤖 Android / Samsung</div><div class="howto-text">USB Debugging → PC: <strong>adb bugreport log.txt</strong><br>Or: Settings → About Phone → Diagnostic → Export</div></div>
+            <div class="howto-card"><div class="howto-brand">🍎 Mac</div><div class="howto-text"><strong>Console.app</strong> → device → filter errors → File → Export as .txt</div></div>
+            <div class="howto-card"><div class="howto-brand">💡 No log?</div><div class="howto-text">No problem — works without one. A log makes the verdict <strong>objective evidence</strong>.</div></div>
           </div>
         </div>
         <button class="btn-submit" id="submitBtn"><span>⚖</span><span id="submit-text">Summon the Tribunal</span></button>
@@ -307,32 +314,37 @@ select option{background:var(--white);}
       </div>
     </div>
 
+    <!-- LOADING -->
     <div class="loading" id="loading">
       <div class="spinner"></div>
-      <div class="l-title" id="l-title">AI Jury Deliberating</div>
-      <div class="l-sub">4 Independent Validators Analyzing</div>
+      <div class="l-title">GenLayer AI Jury Deliberating</div>
+      <div class="l-sub">5 Validators · Optimistic Democracy</div>
       <div class="timer" id="timer">00:00</div>
-      <div class="l-phase" id="l-phase">Sending to validators...</div>
+      <div class="l-phase" id="l-phase">Sending to GenLayer validators...</div>
+      <div class="retry-count" id="retry-count"></div>
+      <div class="prog-bar"><div class="prog-fill" id="pf"></div></div>
     </div>
 
-    <div class="validators-grid" id="validatorsGrid">
-      <div class="val-card" id="v0"><div class="val-role">🔧 Hardware Expert</div><div class="val-status"><span class="val-dot" id="vd0"></span><span id="vs0">Waiting...</span></div><div class="val-text" id="vt0"></div></div>
-      <div class="val-card" id="v1"><div class="val-role">💻 Software Diagnostics</div><div class="val-status"><span class="val-dot" id="vd1"></span><span id="vs1">Waiting...</span></div><div class="val-text" id="vt1"></div></div>
-      <div class="val-card" id="v2"><div class="val-role">⚖️ Consumer Rights</div><div class="val-status"><span class="val-dot" id="vd2"></span><span id="vs2">Waiting...</span></div><div class="val-text" id="vt2"></div></div>
-      <div class="val-card" id="v3"><div class="val-role">📊 Statistical Analysis</div><div class="val-status"><span class="val-dot" id="vd3"></span><span id="vs3">Waiting...</span></div><div class="val-text" id="vt3"></div></div>
-      <div class="val-card" id="v4"><div class="val-role">🛡️ Repair Cost & Value</div><div class="val-status"><span class="val-dot" id="vd4"></span><span id="vs4">Waiting...</span></div><div class="val-text" id="vt4"></div></div>
+    <!-- STEPS -->
+    <div class="steps-card" id="stepsCard">
+      <div class="steps-lbl">⛓ On-Chain Progress</div>
+      <div class="step-row" id="s1"><div class="step-icon">1</div><span id="s1t">Sending case to GenLayer Studionet...</span></div>
+      <div class="step-row" id="s2"><div class="step-icon">2</div><span id="s2t">5 AI Validators analyzing independently...</span></div>
+      <div class="step-row" id="s3"><div class="step-icon">3</div><span id="s3t">Optimistic Democracy reaching consensus...</span></div>
+      <div class="step-row" id="s4"><div class="step-icon">4</div><span id="s4t">Reading verdict from chain...</span></div>
     </div>
 
+    <!-- RESULT -->
     <div id="result">
       <div class="verdict-card">
         <div class="vc-top fault" id="vc-top">
-          <div class="vc-eye">AI Consensus Verdict</div>
+          <div class="vc-eye">GenLayer Consensus Verdict — 5 Validators</div>
           <div class="verdict-pill"><span class="vp-txt" id="vp-txt">MANUFACTURER FAULT</span></div>
         </div>
         <div class="vc-body">
           <div class="verdict-title" id="verdict-title">—</div>
           <p class="v-quote" id="v-quote">—</p>
-          <div class="log-evidence" id="log-evidence">📋 Log file analyzed — verdict based on objective diagnostic data</div>
+          <div class="log-badge" id="log-badge">📋 Log file analyzed — verdict based on objective diagnostic data</div>
           <div class="bar-section">
             <div class="bar-lbl"><span id="lbl-confidence">Validator Confidence</span><span id="bar-pct">—</span></div>
             <div class="bar-track"><div class="bar-fill" id="bar-fill"></div></div>
@@ -348,7 +360,7 @@ select option{background:var(--white);}
             <div class="actions-lbl" id="lbl-actions">Recommended Actions</div>
             <div id="actions-list"></div>
           </div>
-          <div class="onchain"><span class="oc-dot"></span><span class="oc-txt" id="oc-txt">AI Consensus Verdict · Tech Tribunal</span></div>
+          <div class="onchain"><span class="oc-dot"></span><span class="oc-txt" id="oc-txt">GenLayer Studionet · Optimistic Democracy · 5 Validators</span></div>
           <div class="btn-row">
             <button class="btn-secondary" onclick="copyReport()" id="copy-btn">📋 Copy Full Report</button>
             <button class="btn-ghost" onclick="resetAll()" id="reset-btn">↩ New Case</button>
@@ -363,16 +375,19 @@ select option{background:var(--white);}
       <div class="w-lbl">Wallet</div>
       <div class="w-row"><span class="w-dot" id="w-dot"></span><span class="w-addr" id="w-addr">Not connected</span></div>
       <button class="btn-connect" id="wallet-btn">Connect Wallet</button>
-      <div style="font-family:var(--mono);font-size:9px;color:var(--ink3);margin-top:8px;line-height:1.6;">Optional — for on-chain proof of your verdict</div>
     </div>
     <div class="info-card">
       <div class="info-title">How it works</div>
-      <div class="info-txt"><strong>4 AI validators</strong> independently analyze your case including your log file. Each gives a verdict. Consensus determines the final result — stored on-chain as permanent evidence.</div>
+      <div class="info-txt"><strong>5 GenLayer AI validators</strong> independently analyze your case including your log file. Optimistic Democracy ensures consensus — verdict stored permanently on-chain as objective evidence.</div>
+    </div>
+    <div class="contract-card">
+      <div class="contract-lbl">Contract</div>
+      <div class="contract-addr">0x52266b39411BFa3BCE7724AD632fB1E92D86E152<br><span>● GenLayer Studionet</span></div>
     </div>
   </div>
 </main>
 
-<footer class="site-footer">Built on <a href="https://genlayer.com" target="_blank" rel="noopener">GenLayer</a> · 5 AI Validators · Not legal advice</footer>
+<footer class="site-footer">Built on <a href="https://genlayer.com" target="_blank" rel="noopener">GenLayer</a> · 5 AI Validators · Optimistic Democracy · Not legal advice</footer>
 
 <div id="wallet-modal" class="overlay" role="dialog" aria-modal="true">
   <div class="modal">
@@ -380,7 +395,7 @@ select option{background:var(--white);}
     <div class="m-tag">Connect Wallet</div>
     <div class="m-title">Choose your wallet</div>
     <div id="wm-list"></div>
-    <div class="wm-foot">Optional · Connects to GenLayer Studionet for on-chain proof</div>
+    <div class="wm-foot">Connects to GenLayer Studionet · Verdicts stored on-chain</div>
   </div>
 </div>
 
@@ -394,19 +409,19 @@ window.currentLang='en';
 function $(id){return document.getElementById(id)}
 function txt(id,t){const e=$(id);if(e)e.textContent=t}
 function showStatus(msg,err){const e=$('status-msg');if(!msg){e.style.display='none';e.className='status-msg';return;}e.textContent=msg;e.className='status-msg show'+(err?' error':'');}
-function startTimer(){elapsed=0;clearInterval(timerInt);timerInt=setInterval(()=>{elapsed++;$('timer').textContent=String(Math.floor(elapsed/60)).padStart(2,'0')+':'+String(elapsed%60).padStart(2,'0');},1000);}
+function startTimer(){elapsed=0;clearInterval(timerInt);$('pf').style.width='0%';timerInt=setInterval(()=>{elapsed++;$('timer').textContent=String(Math.floor(elapsed/60)).padStart(2,'0')+':'+String(elapsed%60).padStart(2,'0');},1000);}
 function stopTimer(){clearInterval(timerInt);}
 
 $('logFile').addEventListener('change',async e=>{
   const f=e.target.files[0];if(!f)return;
   $('fileName').textContent='✓ '+f.name+' ('+(f.size/1024).toFixed(1)+' KB)';
-  logText=(await f.text()).substring(0,10000);
+  logText=(await f.text()).substring(0,6000);
   $('logPreview').textContent=logText.substring(0,300)+'...';
   $('logPreview').classList.add('show');
 });
 function toggleHowto(){$('howtoBtn').classList.toggle('open');$('howtoBody').classList.toggle('open');}
 
-// EIP-6963 wallet detection
+// EIP-6963 — exactly like Second Opinion
 var wallets6963=[];
 window.addEventListener('eip6963:announceProvider',e=>{if(e.detail?.provider)wallets6963.push(e.detail);});
 window.dispatchEvent(new Event('eip6963:requestProvider'));
@@ -450,135 +465,165 @@ $('wallet-btn').addEventListener('click',()=>{if(!userAddress)openWalletModal();
 if(window.ethereum){window.ethereum.request({method:'eth_accounts'}).then(a=>{if(a.length>0)onConnect(window.ethereum,a);}).catch(()=>{});}
 $('wallet-modal').addEventListener('click',e=>{if(e.target===e.currentTarget)e.currentTarget.style.display='none';});
 
-// VALIDATORS CONFIG
-const VALIDATORS=[
-  {role:'Hardware Expert',icon:'🔧',focus:`You are a senior hardware engineer with 20 years diagnosing smartphones. Analyze ONLY from a hardware perspective. Look for thermal issues, battery defects, component failures, known manufacturing defects for this exact model. If a diagnostic log is provided, find specific error codes, panic strings, thermal events, battery cycle data. Quote specific log lines if found.`},
-  {role:'Software Diagnostics',icon:'💻',focus:`You are a mobile OS engineer specializing in iOS and Android crash analysis. Analyze ONLY from a software/firmware perspective. If a log is provided, identify: crash signatures, exception types, process names, watchdog timeouts, memory pressure events, kernel panics. Distinguish software-fixable from hardware-rooted problems. Name specific processes or error codes you find in the log.`},
-  {role:'Consumer Rights Expert',icon:'⚖️',focus:`You are a consumer rights lawyer specializing in electronics warranties and EU consumer law. Analyze whether the manufacturer support response was legally adequate. Reference EU Consumer Rights Directive 2019/771 and national consumer protection law where relevant. State what legal remedies the user has (repair, replacement, refund). If log shows repeated failures, note this is objective evidence for a warranty claim.`},
-  {role:'Statistical Analyst',icon:'📊',focus:`You are a data analyst tracking device failure rates and known defects. Analyze statistically: is this a known widespread issue with this exact device model? Does the symptom pattern match reported manufacturing defects? Reference any known public issues, recalls, or class actions. If a log is provided, look for error signatures matching known widespread bugs.`},
-  {role:'Repair Cost & Value Expert',icon:'🛡️',focus:`You are an independent device repair and valuation expert. Analyze: what would this repair cost at an authorized service center vs. independent repair shop? Given the device age, warranty status, and fault type, is repair, replacement, or refund the most economically reasonable outcome? What is the user entitled to under fair value principles? Give concrete cost estimates and recommendations.`}
-];
-
-async function callValidator(v,casePrompt){
-  const logSection=logText?`\n\nDIAGNOSTIC LOG FILE (${logText.length} chars — analyze carefully):\n\`\`\`\n${logText}\n\`\`\`\nIMPORTANT: Find specific error codes, crash signatures, thermal events, watchdog timeouts in the log. Quote relevant lines.`:`\n\nNo log file provided — analyze based on description only.`;
-  const prompt=`${v.focus}\n\n${casePrompt}${logSection}\n\nRespond in 3-4 sentences with your expert analysis. End with:\nVERDICT: [MANUFACTURER FAULT / POSSIBLE FAULT / USER ERROR / INCONCLUSIVE] — [one sentence reason]`;
-  const resp=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,messages:[{role:'user',content:prompt}]})});
-  const data=await resp.json();
-  return data.content.map(b=>b.text||'').join('');
-}
-
-async function runFinalConsensus(casePrompt,validatorResults){
-  const summary=validatorResults.map((r,i)=>`${VALIDATORS[i].role}: ${r}`).join('\n\n---\n\n');
-  const logNote=logText?'NOTE: Validators analyzed actual device diagnostic log. Verdict is based on objective log evidence.':'';
-  const prompt=`You are the Chief Justice of the Tech Tribunal. Four expert validators analyzed this device complaint. Deliver the final consensus verdict.\n\n${casePrompt}\n\n${logNote}\n\nVALIDATOR ANALYSES:\n${summary}\n\nRespond ONLY with JSON, no markdown:\n{"verdict":"MANUFACTURER FAULT","verdict_title":"SHORT DRAMATIC TITLE IN CAPS","summary":"2-3 sentence plain explanation for the user","confidence_percent":85,"hardware_finding":"one sentence","software_finding":"one sentence","legal_finding":"one sentence","statistical_finding":"one sentence","action_1":"immediate action","action_2":"escalation path","action_3":"documentation to gather","action_4":"additional resource"}\n\nverdict must be one of: MANUFACTURER FAULT, POSSIBLE FAULT, USER ERROR, INCONCLUSIVE`;
-  const resp=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
-  const data=await resp.json();
-  let text=data.content.map(b=>b.text||'').join('');
-  text=text.replace(/```json|```/g,'').trim();
-  return JSON.parse(text);
+function setStep(n){
+  for(let i=1;i<=4;i++){
+    const el=$('s'+i),icon=el.querySelector('.step-icon');
+    el.classList.remove('active','done');
+    if(i<n){el.classList.add('done');icon.innerHTML='✓';}
+    else if(i===n){el.classList.add('active');icon.innerHTML='<span class="step-spinner"></span>';}
+    else{icon.textContent=i;}
+  }
 }
 
 $('submitBtn').addEventListener('click',async()=>{
   const brand=$('brand').value,model=$('model').value,problem=$('problem').value;
   if(!brand||!model||!problem){showStatus('Please fill in Brand, Model and Problem.',true);return;}
+  if(!glClient){openWalletModal();return;}
+
   const btn=$('submitBtn');
-  btn.disabled=true;txt('submit-text','Analyzing...');
+  btn.disabled=true;txt('submit-text','Processing...');
   $('result').style.display='none';
   $('loading').style.display='block';
-  $('validatorsGrid').classList.remove('show');
+  $('stepsCard').classList.add('show');
   showStatus('');startTimer();
   $('loading').scrollIntoView({behavior:'smooth',block:'center'});
 
-  const casePrompt=`CASE FILE:\n- Device: ${brand} ${model}\n- Duration: ${'duration' in window?$('duration').value:'unknown'}\n- Warranty: ${'warranty' in window?$('warranty').value:'unknown'}\n- Problem: ${problem}\n- Support Response: ${$('support').value||'Not provided'}\n- Already Tried: ${$('tried').value||'Not specified'}`;
-  const durVal=$('duration').value;
-  const warVal=$('warranty').value;
-  const fullCase=`CASE FILE:\n- Device: ${brand} ${model}\n- Duration: ${durVal}\n- Warranty: ${warVal}\n- Problem: ${problem}\n- Support Response: ${$('support').value||'Not provided'}\n- Already Tried: ${$('tried').value||'Not specified'}`;
+  const dur=$('duration').value,war=$('warranty').value;
+  const sup=$('support').value||'',tri=$('tried').value||'';
 
   try{
-    $('loading').style.display='none';
-    $('validatorsGrid').classList.add('show');
-    $('validatorsGrid').scrollIntoView({behavior:'smooth',block:'start'});
+    setStep(1);
+    txt('l-phase','Sending case to GenLayer Studionet...');
 
-    // Run all 4 validators in parallel
-    const promises=VALIDATORS.map((v,i)=>{
-      $('vd'+i).className='val-dot active';
-      txt('vs'+i,'Analyzing...');
-      return callValidator(v,fullCase).then(result=>{
-        $('vd'+i).className='val-dot done';
-        txt('vs'+i,'✓ Complete');
-        const el=$('vt'+i);
-        // Extract verdict tag
-        const vm=result.match(/VERDICT:\s*([A-Z\s]+)\s*[—-]\s*(.+)/i);
-        let clean=result;
-        if(vm){clean=result.replace(vm[0],'').trim();}
-        el.textContent=clean;
-        el.classList.add('show');
-        return result;
-      }).catch(e=>{
-        $('vd'+i).className='val-dot';
-        txt('vs'+i,'⚠ Error');
-        return 'Analysis failed.';
-      });
+    const txHash=await glClient.writeContract({
+      address:CONTRACT,
+      functionName:'analyze_case',
+      args:[brand,model,problem,sup,tri,dur,war,logText],
+      value:BigInt(0)
     });
 
-    txt('l-phase','Computing consensus...');
-    const results=await Promise.all(promises);
+    lastTxHash=txHash;
+    setStep(2);
+    txt('l-phase','5 AI Validators analyzing your case...');
+    txt('oc-txt','TX: '+txHash+' · GenLayer Studionet');
 
-    // Final consensus
-    txt('l-phase','Finalizing verdict...');
-    const final=await runFinalConsensus(fullCase,results);
+    // Poll for FINALIZED — same as Second Opinion
+    const g=await import('https://esm.sh/genlayer-js@latest');
+    const c=await import('https://esm.sh/genlayer-js@latest/chains');
+    let verdict='';
+    let attempt=0;
 
-    stopTimer();
+    for(let i=1;i<=120;i++){
+      await new Promise(r=>setTimeout(r,8000));
+      attempt++;
+      try{
+        const res=await fetch(RPC,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:'eth_getTransactionByHash',params:[txHash]})});
+        const data=await res.json();
+        const st=(data?.result?.status||'').toUpperCase();
+        txt('l-phase',`Validators working... Status: ${st||'PENDING'}`);
+        txt('retry-count',`${i*8}s elapsed · attempt ${attempt}`);
 
-    // Render verdict
-    let cls='unclear';
-    if(final.verdict.includes('MANUFACTURER'))cls='fault';
-    else if(final.verdict.includes('POSSIBLE'))cls='partial';
-    else if(final.verdict.includes('USER'))cls='user';
-    $('vc-top').className='vc-top '+cls;
-    txt('vp-txt',final.verdict);
-    txt('verdict-title',final.verdict_title||final.verdict);
-    txt('v-quote',final.summary);
-    txt('bar-pct',final.confidence_percent+'%');
-    setTimeout(()=>{$('bar-fill').style.width=final.confidence_percent+'%';},200);
-    txt('f-hw',final.hardware_finding||'—');
-    txt('f-sw',final.software_finding||'—');
-    txt('f-legal',final.legal_finding||'—');
-    txt('f-stat',final.statistical_finding||'—');
-    const actions=[final.action_1,final.action_2,final.action_3,final.action_4].filter(Boolean);
-    $('actions-list').innerHTML=actions.map(a=>`<div class="action-row">${a}</div>`).join('');
-    if(logText)$('log-evidence').classList.add('show');
+        if(i===5) setStep(3);
 
-    $('result').style.display='block';
-    $('result').scrollIntoView({behavior:'smooth',block:'start'});
+        if(st==='FINALIZED'){
+          setStep(3);
+          txt('l-phase','Consensus reached! Reading verdict...');
+          await new Promise(r=>setTimeout(r,2000));
+          setStep(4);
 
-    // Send to GenLayer in background (optional on-chain proof)
-    if(glClient){
-      txt('oc-txt','Submitting to GenLayer for on-chain proof...');
-      glClient.writeContract({address:CONTRACT,functionName:'analyze_case',args:[brand,model,problem,$('support').value||'',$('tried').value||'',durVal,warVal,logText.substring(0,4000)],value:BigInt(0)}).then(tx=>{
-        lastTxHash=tx;
-        txt('oc-txt','On-Chain Proof: '+tx+' · GenLayer Studionet');
-      }).catch(()=>{
-        txt('oc-txt','AI Consensus Verdict · Tech Tribunal');
-      });
+          // Read exactly like Second Opinion
+          const tc=g.createClient({chain:c.studionet});
+          const v=await tc.readContract({address:CONTRACT,functionName:'get_verdict',args:[]});
+          const vStr=String(v||'').replace(/^"|"$/g,'').trim();
+          console.log('get_verdict raw:', vStr);
+
+          if(vStr&&vStr.length>5){
+            verdict=vStr;
+            // Also get findings and actions
+            try{
+              const fr=await tc.readContract({address:CONTRACT,functionName:'get_findings',args:[]});
+              const ar=await tc.readContract({address:CONTRACT,functionName:'get_actions',args:[]});
+              renderVerdict(vStr,String(fr||'').replace(/^"|"$/g,''),String(ar||'').replace(/^"|"$/g,''));
+            }catch(e){
+              renderVerdict(vStr,'','');
+            }
+            break;
+          }
+        }
+      }catch(e){
+        txt('l-phase','Polling... '+i*8+'s');
+        console.warn('Poll error:',e);
+      }
+    }
+
+    if(!verdict){
+      throw new Error('Validators did not finalize within 16 minutes. Check GenLayer Studio for TX: '+txHash.slice(0,20)+'...');
     }
 
   }catch(e){
-    stopTimer();$('loading').style.display='none';
+    stopTimer();
+    $('loading').style.display='none';
     showStatus('Error: '+(e.message||e),true);
   }
-  btn.disabled=false;txt('submit-text','Summon the Tribunal');
+
+  btn.disabled=false;
+  txt('submit-text','Summon the Tribunal');
 });
 
+function renderVerdict(verdictRaw,findingsRaw,actionsRaw){
+  stopTimer();
+  $('loading').style.display='none';
+
+  // Parse: "TITLE | VERDICT_TYPE | CONFIDENCE% | summary"
+  let title='Verdict',vtype='INCONCLUSIVE',conf=75,summary=verdictRaw;
+  try{
+    const parts=verdictRaw.split(' | ');
+    if(parts.length>=4){title=parts[0];vtype=parts[1];conf=parseInt(parts[2])||75;summary=parts.slice(3).join(' | ');}
+    else if(parts.length===3){title=parts[0];vtype=parts[1];summary=parts[2];}
+    else if(parts.length===2){title=parts[0];summary=parts[1];}
+  }catch(e){}
+
+  let cls='unclear';
+  if(vtype.includes('MANUFACTURER'))cls='fault';
+  else if(vtype.includes('POSSIBLE'))cls='partial';
+  else if(vtype.includes('USER'))cls='user';
+
+  $('vc-top').className='vc-top '+cls;
+  txt('vp-txt',vtype);
+  txt('verdict-title',title);
+  txt('v-quote',summary);
+  txt('bar-pct',conf+'%');
+  setTimeout(()=>{$('bar-fill').style.width=conf+'%';},200);
+
+  if(findingsRaw&&findingsRaw.length>5){
+    const fp=findingsRaw.split(' | ');
+    txt('f-hw',(fp[0]||'').replace('Hardware: ','')||'—');
+    txt('f-sw',(fp[1]||'').replace('Software: ','')||'—');
+    txt('f-legal',(fp[2]||'').replace('Legal: ','')||'—');
+    txt('f-stat',(fp[3]||'').replace('Statistical: ','')||'—');
+  }
+
+  if(actionsRaw&&actionsRaw.length>5){
+    $('actions-list').innerHTML=actionsRaw.split(' | ').map(a=>`<div class="action-row">${a.replace(/^\d+\.\s*/,'')}</div>`).join('');
+  }
+
+  if(logText)$('log-badge').classList.add('show');
+
+  $('result').style.display='block';
+  $('result').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
 function copyReport(){
-  const lines=['TECH TRIBUNAL — OFFICIAL CASE REPORT','Date: '+new Date().toLocaleDateString(),lastTxHash?'On-Chain TX: '+lastTxHash:'',logText?'Log File Analyzed: YES ('+logText.length+' chars)':'No log file','','VERDICT: '+$('verdict-title').textContent,$('v-quote').textContent,'','EXPERT FINDINGS:','Hardware: '+$('f-hw').textContent,'Software: '+$('f-sw').textContent,'Legal: '+$('f-legal').textContent,'Statistical: '+$('f-stat').textContent,'','ACTIONS:',...Array.from(document.querySelectorAll('.action-row')).map((el,i)=>`${i+1}. ${el.textContent}`)];
+  const lines=['TECH TRIBUNAL — OFFICIAL CASE REPORT','Date: '+new Date().toLocaleDateString(),'Powered by: GenLayer Studionet · 5 AI Validators · Optimistic Democracy',lastTxHash?'On-Chain TX: '+lastTxHash:'',logText?'Log File Analyzed: YES ('+logText.length+' chars)':'No log file','','VERDICT: '+$('verdict-title').textContent,$('v-quote').textContent,'','EXPERT FINDINGS:','Hardware: '+$('f-hw').textContent,'Software: '+$('f-sw').textContent,'Legal: '+$('f-legal').textContent,'Statistical: '+$('f-stat').textContent,'','ACTIONS:',...Array.from(document.querySelectorAll('.action-row')).map((el,i)=>`${i+1}. ${el.textContent}`)];
   navigator.clipboard.writeText(lines.filter(Boolean).join('\n'));
   const b=$('copy-btn');b.textContent='✓ Copied!';setTimeout(()=>b.textContent='📋 Copy Full Report',2000);
 }
+
 function resetAll(){
-  $('result').style.display='none';$('validatorsGrid').classList.remove('show');
-  $('bar-fill').style.width='0%';$('log-evidence').classList.remove('show');
-  lastTxHash=null;logText='';$('logFile').value='';$('fileName').textContent='';$('logPreview').classList.remove('show');
+  $('result').style.display='none';$('stepsCard').classList.remove('show');
+  $('bar-fill').style.width='0%';$('log-badge').classList.remove('show');
+  lastTxHash=null;logText='';$('logFile').value='';$('fileName').textContent='';
+  $('logPreview').classList.remove('show');
   $('submitBtn').disabled=false;txt('submit-text','Summon the Tribunal');
   window.scrollTo({top:0,behavior:'smooth'});
 }

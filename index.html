@@ -679,25 +679,17 @@ let wallet=null, glClient=null, logContent='', logFileName='', caseData={}, curr
 
 // ── WALLET ─────────────────────────────────────────────────────────────────
 async function connectWallet() {
-  if (!window.ethereum) { showErr('MetaMask not found.'); return; }
+  if (!window.ethereum) { showErr('MetaMask not found. Please install MetaMask.'); return; }
   try {
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
     wallet = accounts[0];
-    // Update UI immediately after getting account
     document.getElementById('wDot').classList.add('on');
     document.getElementById('wAddr').textContent = wallet.slice(0,6)+'...'+wallet.slice(-4);
     document.getElementById('connectBtn').textContent = '✓ Connected';
     document.getElementById('connectBtn').disabled = true;
-    // Load genlayer-js in background
-    try {
-      const g = await import('https://esm.sh/genlayer-js@latest');
-      const c = await import('https://esm.sh/genlayer-js@latest/chains');
-      glClient = g.createClient({ chain: c.studionet, account: wallet });
-      const hex = '0x' + c.studionet.id.toString(16);
-      try { await window.ethereum.request({ method: 'wallet_addEthereumChain', params: [{ chainId: hex, chainName: 'GenLayer Studio', rpcUrls: [RPC], nativeCurrency: { name: 'GEN', symbol: 'GEN', decimals: 18 } }] }); } catch(e) {}
-      try { await window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: hex }] }); } catch(e) {}
-    } catch(e) { console.warn('genlayer-js init (non-fatal):', e); }
-  } catch(e) { showErr('Wallet error: ' + e.message); }
+  } catch(e) {
+    showErr('Wallet error: ' + e.message);
+  }
 }
 
 // ── FILE ───────────────────────────────────────────────────────────────────
